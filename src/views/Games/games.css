@@ -1,0 +1,5 @@
+.sidebar .logo-img img {
+    max-width: 150px !important;
+    max-height: 150px !important;
+    border-radius: 30px;
+}
