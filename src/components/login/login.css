@@ -1,0 +1,23 @@
+/* .logo-background{
+     background-image: 
+    url(../../assets/img/goc2.png);
+        
+        background-size:contain;
+        
+        height: 650px;
+        font-size: 50px;
+        background-repeat: no-repeat; 
+} */
+.logo-background .logo-img-tag {
+    width: 100%;
+    background-color: aqua;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 100vh;
+}
+.logo-background .logo-img-tag img {
+height: 300px;
+width: 300px;
+border-radius: 50%;
+}
