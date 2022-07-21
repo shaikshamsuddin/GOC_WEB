@@ -24,8 +24,15 @@ import Icons from "views/Icons.js";
 import Maps from "views/Maps.js";
 import Notifications from "views/Notifications.js";
 import Upgrade from "views/Upgrade.js";
+import LoginPage from "components/login/Login.js";
 
 const dashboardRoutes = [
+  {
+    path : "/login",
+    name : "Login",
+    component : LoginPage,
+    layout : "/login"
+  },
   {
     upgrade: true,
     path: "/upgrade",

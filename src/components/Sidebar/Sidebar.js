@@ -27,6 +27,8 @@ function Sidebar({ color, image, routes }) {
   const activeRoute = (routeName) => {
     return location.pathname.indexOf(routeName) > -1 ? "active" : "";
   };
+
+  
   return (
     <div className="sidebar" data-image={image} data-color={color}>
       <div
@@ -36,7 +38,7 @@ function Sidebar({ color, image, routes }) {
         }}
       />
       <div className="sidebar-wrapper">
-        <div className="logo d-flex align-items-center justify-content-start">
+        <div className="logo d-flex align-items-center justify-content-center">
           
             <div className="logo-img">
               <img src={require("assets/img/goc2.png")} alt="..." />

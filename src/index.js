@@ -31,7 +31,8 @@ import "./assets/css/demo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
-
+import LoginPage from "components/login/Login.js";
+import RegisterPage from "components/login/register";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const sagaMiddleware = createSagaMiddleware();
 
@@ -44,6 +45,9 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
+        <Route exact path= "/" component={LoginPage} />
+        <Route exact path= "/register" component={RegisterPage} />
+
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Redirect from="/" to="/admin/dashboard" />
       </Switch>
