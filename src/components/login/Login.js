@@ -89,7 +89,7 @@ function LoginPage() {
               </button>
               
             </form>
-            <div>
+            <div style={{marginTop:'30px'}}>
               <span>
                 Not a User!?
               </span>
