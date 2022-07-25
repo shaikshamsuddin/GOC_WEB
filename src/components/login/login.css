@@ -8,16 +8,54 @@
         font-size: 50px;
         background-repeat: no-repeat; 
 } */
+.text-color{
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
 .logo-background .logo-img-tag {
-    width: 100%;
-    background-color: aqua;
+    width: 50%;
+    /* border-radius: 100%; */
     display: flex;
     justify-content:center;
     align-items: center;
-    height: 100vh;
+    /* height: 100px; */
+}
+.logo-img-login {
+    width: 30%;
+    height: 50px !important;
+    /* border-radius: 100%; */
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
 .logo-background .logo-img-tag img {
-height: 300px;
-width: 300px;
+/* height: 600px !important; */
+width: 100%;
+display: block;
+object-fit: cover;
 border-radius: 50%;
+}
+.container-card{
+    width: 70%;
+    height: 500px;
+}
+.container-fluid-block{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(20, 28, 53);
+    overflow: hidden;
+    width: 100;
+    height: 100vh;
+}
+
+.form-groups{
+    margin-bottom: 3px;
+}
+.condition-styles{
+    margin-left: 5px;
+}
+.condition-styles:hover{
+    text-decoration: underline;
+    cursor: pointer;
+
 }

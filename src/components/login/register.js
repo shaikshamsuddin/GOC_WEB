@@ -27,97 +27,161 @@ import Form from 'react-bootstrap/Form';
 
 function RegisterPage() {
     const history = useHistory();
-  const [username, setUserName] = React.useState();
-  const [password, setPassword] = React.useState();
-    const OnLoginClick = ()=>{
-        history.push('/admin')
-    }
-    const RegisterSubmit =  e => {
-        e.preventDefault();
-        const token =  {
-          username,
-          password
-        };
-        console.log(token,"token")
-        history.push('/')
+  const [state,setState] = React.useState({
+    firstName: '',
+    lastName : '',
+    PhoneNumber : '',
+    GameId : '',
+    roleId : '',
+    password : '',
+    errors : ''
+  }) ;
 
-        // setToken(token);
+
+     const RegisterSubmit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    
+        let firstName = state.firstName;
+        let lastName = state.lastName;
+        let PhoneNumber = state.PhoneNumber;
+        let GameId = state.GameId;
+        let roleId = state.roleId;
+        let password = state.password;
+
+      if(
+        state.firstName == "" || state.lastName == "" || state.PhoneNumber == "" || state.GameId == "" || state.roleId == "" || state.password == ""
+      ){
+
+        setState({...state, errors : 'true'
+        })
+
+      }
+      else {
+        setState({...state, errors : 'false'
+        })      }
+      
+        const data = {
+          firstName, lastName, PhoneNumber,GameId,roleId,password
+        };
+    console.log(data,state.errors,"registered data")
+        //dispatch(registerUserAction(data));
       }
     
     return (
+      <div className="container-fluid-block w-100">
+        
+        <div>
+      <h3 className="text-center text-color">
+                            Register In Gangs of Cricket
+                        </h3>
         <Container fluid className="login-container-fluid logo-background">
-            <Row> 
-                <Col lg= {6}>
+            <Row className="d-flex justify-content-center align-items-center"> 
+                <Col lg= {6} className="d-flex justify-content-center align-items-center">
                 <div className="logo-img-tag">
                 <img src={require("assets/img/goc2.png")} alt="..." />
                 </div>
                 </Col>
+                
                 <Col className="ml-auto mr-auto d-flex align-items-center justify-content-center" lg= {6}>
-                    <div className="form-block" style={{width : '60%'}}>
-                        <h4>
-                            Register In Gangs of Cricket
-                        </h4>
+                    <div className="form-block" style={{width : '70%'}}>
+                        
                      <Card style={{padding : '30px'}}> 
                      <form id="loginform" onSubmit={RegisterSubmit}>
-                     <div className="form-group">
-                <label>Email Id</label>
+                     <div className="form-groups">
+                <label>First Name</label>
                 <input
-                  type="mail"
+                  type="text"
                   className="form-control"
-                  id="EmailInput"
-                  name="NumbaerInput"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter Email Address"
-                  onChange={(event) => setUserName(event.target.value)}
+                  id="firstNameInput"
+                  name="firstNameInput"
+                  aria-describedby="firstName"
+                  placeholder="Enter First Name"
+                  onChange={(event) => setState({...state, firstName: event.target.value})}
                 />
 
               </div>
-              <div className="form-group">
-                <label>UserName</label>
+              <div className="form-groups">
+                <label>Last Name</label>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
-                  id="EmailInput"
-                  name="NumbaerInput"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter Number"
-                  onChange={(event) => setUserName(event.target.value)}
+                  id="lastNameInput"
+                  name="LastNameInput"
+                  aria-describedby="LastName"
+                  placeholder="Enter Last Name"
+                  onChange={(event) => setState({...state, lastName: event.target.value})}
+
                 />
            
               </div>
-              <div className="form-group">
+              <div className="form-groups">
+                <label>Mobile Number</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="MobileInput"
+                  name="MobileInput"
+                  aria-describedby="MobileInput"
+                  placeholder="Enter Mobile Number"
+                  onChange={(event) => setState({...state, PhoneNumber: event.target.value})}
+
+                />
+           
+              </div><div className="form-groups">
+                <label>Game Id</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="gameID"
+                  name="gameID"
+                  aria-describedby="gameID"
+                  placeholder="Enter Game Id"
+                  onChange={(event) => setState({...state, GameId: event.target.value})}
+
+                />
+           
+              </div>
+              <div className="form-groups">
+                <label>Role Id</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="roleID"
+                  name="roleID"
+                  aria-describedby="roleID"
+                  placeholder="Enter Role Id"
+                  onChange={(event) => setState({...state, roleId: event.target.value})}
+
+                />
+           
+              </div>
+              
+              <div className="form-groups">
                 <label>Password</label>
                 <input
                   type="password"
                   className="form-control"
                   id="exampleInputPassword1"
                   placeholder="Password"
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-             
-              </div>
-              <div className="form-group">
-                <label>Confirm Password</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="confirmInputPassword1"
-                  placeholder="Password"
-                  onChange={(event) => setPassword(event.target.value)}
+                  onChange={(event) => setState({...state, password: event.target.value})}
+
                 />
              
               </div>
           
-              <button type="submit" className="btn btn-primary">
+             <div className=" col text-center mt-3">
+              <button type="submit" className=" btn btn-primary">
                 Register
               </button>
-              <div style={{display : 'flex', justifyContent:'space-between',marginTop:'30px'}}>
+              </div>
+              <div style={{display : 'flex',marginTop:'30px'}}>
                 <span>
                     Already a user!?
                 </span>
-              <button  className="btn btn-secondary" onClick={()=>{history.push('/')}}>
+              <a  className="condition-styles" onClick={()=>{history.push('/')}}>
                 Login
-              </button>
+              </a>
               </div>
             </form>
                             </Card> 
@@ -125,6 +189,9 @@ function RegisterPage() {
                 </Col>
             </Row>
         </Container>
+        </div>
+
+        </div>
     );
 }
 
