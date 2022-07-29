@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import './login.css';
 import {
   Badge,
@@ -10,6 +10,7 @@ import {
   Container,
   Row,
   Col,
+  Spinner
 } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useLocation, Route, Switch } from "react-router-dom";
@@ -25,22 +26,30 @@ import Form from 'react-bootstrap/Form';
 //     backgroundRepeat: 'no-repeat',
 // };
 
-function LoginPage() {
+const LoginPage = ({
+  loginUser
+})=> {
   const history = useHistory();
-  const [username, setUserName] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  // const [username, setUserName] = React.useState('');
+  // const [password, setPassword] = React.useState('');
+  const [state,setState]= useState({
+    loading:false
+  })
   const OnLoginClick = () => {
     history.push('/admin')
   }
+  const mobileNumber = useRef();
+  const password = useRef();
   const loginSubmit = e => {
     e.preventDefault();
-    const token = {
-      username,
-      password
-    };
-    console.log(token, "token")
-    history.push('/admin')
-
+    //history.push('/admin')
+    setState({...state,loading:true})
+    loginUser({
+      "mobile":mobileNumber.current.value,
+      "password":password.current.value,
+      "platform":"w"
+  
+  })
     // setToken(token);
   }
 
@@ -51,6 +60,9 @@ function LoginPage() {
         <h3 className="text-center text-color">
           Welcome to Gangs of Cricket
         </h3>
+        {state.loading &&
+        <Spinner animation="border" />
+        }
         <Container fluid className="login-container-fluid logo-background mt-5">
         <Row className="d-flex"> 
                 <Col lg= {6} className="col d-flex justify-content-center align-items-center">
@@ -71,7 +83,8 @@ function LoginPage() {
                         name="NumbaerInput"
                         aria-describedby="emailHelp"
                         placeholder="Enter Number"
-                        onChange={(event) => setUserName(event.target.value)}
+                        // onChange={(event) => setUserName(event.target.value)}
+                        ref={mobileNumber}
                       />
 
                     </div>
@@ -82,7 +95,8 @@ function LoginPage() {
                         className="form-control"
                         id="exampleInputPassword1"
                         placeholder="Password"
-                        onChange={(event) => setPassword(event.target.value)}
+                        // onChange={(event) => setPassword(event.target.value)}
+                        ref={password}
                       />
 
                     </div>

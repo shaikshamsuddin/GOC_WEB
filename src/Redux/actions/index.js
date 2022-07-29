@@ -1,4 +1,5 @@
 export { getGames } from './Games'
+export { loginUser,setUser } from './Users'
 
 export const petIncrement = (number) => {
   return {
