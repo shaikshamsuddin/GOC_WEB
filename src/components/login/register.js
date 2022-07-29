@@ -85,7 +85,6 @@ function RegisterPage() {
                 
                 <Col className="ml-auto mr-auto d-flex justify-content-end" lg= {6}>
                 <div className="form-block" style={{width:'70%'}}>
-                        +
                      <Card style={{padding : '30px'}}> 
                      <form id="loginform" onSubmit={RegisterSubmit}>
                      <div className="form-groups">
