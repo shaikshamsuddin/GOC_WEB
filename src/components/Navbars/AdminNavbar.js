@@ -20,9 +20,10 @@ import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 
 import routes from "routes.js";
-
+import { useHistory } from "react-router-dom";
 function Header() {
   const location = useLocation();
+  const history = useHistory();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
     document.documentElement.classList.toggle("nav-open");
@@ -196,7 +197,9 @@ function Header() {
               <Nav.Link
                 className="m-0"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  history.push('/')
+                }}
               >
                 <span className="no-icon">Log out</span>
               </Nav.Link>
