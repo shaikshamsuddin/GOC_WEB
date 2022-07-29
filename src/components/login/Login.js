@@ -53,14 +53,14 @@ function LoginPage() {
         </h3>
         <Container fluid className="login-container-fluid logo-background mt-5">
         <Row className="d-flex"> 
-                <Col lg= {6} className="col d-flex justify-content-center align-items-center">
-                <div className="logo-img-tag">
+                <Col lg= {6} className="col" style={{width:'100%'}}>
+                <div className="logo-img-tag image-position">
                 <img src={require("assets/img/goc2.png")} alt="..." />
                 </div>
                 </Col>
-            <Col className="ml-auto mr-auto d-flex align-items-center justify-content-center" lg={6}>
-              <div className="form-block" style={{ width: '50%' }}>
-                <Card style={{ padding: '50px' }}>
+            <Col className="ml-auto mr-auto d-flex justify-content-end" lg={6}>
+              <div className="form-block" style={{width:'70%'}}>
+              <Card style={{padding : '30px'}}> 
                   <form id="loginform" onSubmit={loginSubmit}>
                     <div className="form-group">
                       <label>UserName</label>
