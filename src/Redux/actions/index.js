@@ -1,21 +1,5 @@
-export { getGames } from './Games'
-export { loginUser,setUser } from './Users'
+export { getGames,setGames,getUsers,setUsers } from './Games';
+export { loginUser,setLoginResponse ,setRegisterResponse , registerUser} from './Users'
+export {getRoles , setRoles , mergeRoles, setMergeRoles} from './Roles';
+export {setMergeGames , mergeGames } from './mergeGames';
 
-export const petIncrement = (number) => {
-  return {
-    type: "PET_INCREASED",
-    payload: number,
-  };
-};
-
-export const petDecrement = () => {
-  return {
-    type: "PET_DECREASED",
-  };
-};
-
-export const getUsers = () => {
-  return {
-    type: "GET_USERS_REQUESTED",
-  };
-};

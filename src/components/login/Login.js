@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './login.css';
 import {
   Badge,
@@ -27,7 +27,9 @@ import Form from 'react-bootstrap/Form';
 // };
 
 const LoginPage = ({
-  loginUser
+  loginUser,
+  getGames,
+  loginResponse
 })=> {
   const history = useHistory();
   // const [username, setUserName] = React.useState('');
@@ -42,7 +44,6 @@ const LoginPage = ({
   const password = useRef();
   const loginSubmit = e => {
     e.preventDefault();
-    //history.push('/admin')
     setState({...state,loading:true})
     loginUser({
       "mobile":mobileNumber.current.value,
@@ -50,9 +51,17 @@ const LoginPage = ({
       "platform":"w"
   
   })
-    // setToken(token);
-  }
+    }
 
+  useEffect(()=>{
+    if(loginResponse && loginResponse === 1) {
+      history.push('/admin')
+  
+    }
+  },[loginResponse])
+  useEffect(()=>{
+    getGames()
+  },[])
   return (
     <div className="container-fluid-block w-100">
 

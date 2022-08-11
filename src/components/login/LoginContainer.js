@@ -1,15 +1,21 @@
 import { connect } from "react-redux";
 import Login from "./Login";
-import { loginUser } from "../../Redux/actions";
+import { loginUser, getGames } from "../../Redux/actions";
+import { getRoles,registerUser } from "../../Redux/actions";
 
 const mapStateToProps = state => {
     return {
-        // games: state.gamesReducer ? state.gamesReducer.games:[]
+        games: state.gamesReducer ? state.gamesReducer.games:[],
+        registerEditResponse : state.gamesReducer ? state.gamesReducer.registerResponse: "",
+        loginResponse : state.gamesReducer ? state.gamesReducer.loginResponse : ''
+
     }
 }
 
 const mapDispatchToProps = {
-    loginUser
+    loginUser,
+    getGames,
+    registerUser
 }
 
 const LoginContainer = connect(

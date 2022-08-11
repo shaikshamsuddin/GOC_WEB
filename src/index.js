@@ -32,10 +32,9 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import AdminLayout from "layouts/Admin.js";
 import LoginContainer from "components/login/LoginContainer";
-import RegisterPage from "components/login/register";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const sagaMiddleware = createSagaMiddleware();
-
+import RegisterContainer from "components/register/registerContainer";
 const middleware = [sagaMiddleware];
 
 const store = compose(applyMiddleware(...middleware))(createStore)(reducers);
@@ -45,11 +44,10 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path= "/login" component={LoginContainer} />
-        <Route exact path= "/register" component={RegisterPage} />
-
+        <Route exact path= "/" component={LoginContainer} />
+        <Route path = "/register" component = {RegisterContainer} />
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-        <Redirect from="/" to="/admin/dashboard" />
+        {/* <Redirect from="/" to="/admin/dashboard" /> */}
       </Switch>
     </BrowserRouter>
   </Provider>

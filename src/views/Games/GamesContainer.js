@@ -1,15 +1,18 @@
 import { connect } from "react-redux";
 import Games from "./Games";
-import { getGames } from "../../Redux/actions";
+import { getGames,mergeGames, getRoles } from "../../Redux/actions";
 
 const mapStateToProps = state => {
     return {
-        games: state.gamesReducer ? state.gamesReducer.games:[]
+        games: state.gamesReducer ? state.gamesReducer.fetchGames:[],
+        mergeGamesResponse : state.gamesReducer ? state.gamesReducer.mergeGamesResponse : false,
+        
     }
 }
 
 const mapDispatchToProps = {
-    getGames
+    getGames,
+    mergeGames
 }
 
 const GamesContainer = connect(

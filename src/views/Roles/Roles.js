@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import './games.css';
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import React, { useEffect, useRef, useState } from "react";
+// import './games.css';
 import moment from "moment";
 // react-bootstrap components
 import {
@@ -18,67 +15,68 @@ import {
   Col,
 } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
+import './role.css';
 
-const Games = ({
-  getGames,
-  games,
-  mergeGames,
-  mergeGamesResponse
+const Roles = ({
+  getRoles,
+  roles,
+  mergeRoles,
+  mergeRoleResponse
 }) => {
   useEffect(() => {
-    getGames();
-    console.log(mergeGamesResponse, "mergeGamesResponse")
+    getRoles();
   }, [])
-  const [gamesData, setGamesData] = useState([]);
-  const newGame = useRef();
+  useEffect(() => {
+    console.log(roles, "roles")
+
+  }, [roles]);
+  // const mergeResponseStatus = mergeRoleResponse == 1 ? true : false;
+
+  const newRole = useRef();
   const [show, setShow] = useState(false);
-  const [editShow, setEditShow] = useState(false)
-
-
   const [state, setState] = React.useState({
-    gameName: "",
+    role: "",
     id: "",
     status: 1,
     setActive: ''
   });
-
-  useEffect(() => {
-    if (mergeGamesResponse) {
-      getGames();
-
-    }
-  }, [mergeGamesResponse])
-
-  useEffect(() => {
-    setGamesData(games)
-  }
-    , [games])
-
-  const handleSave = ((e) => {
-    e.preventDefault();
-
-    mergeGames({ "gameName": newGame.current.value })
-    setShow(false)
-  }
-  )
+  const [editShow, setEditShow] = useState(false)
 
   const handleClose = ((e) => {
     setShow(false)
     setEditShow(false)
   }
   )
-  const editGame = ((e) => {
-    e.preventDefault();
-    setEditShow(true)
-    // setState(...state, {gameName : game})
-  })
 
-  const saveEditGame = ((e) => {
+  const saveEditRole = ((e) => {
     e.preventDefault();
-    mergeGames({ "_id": state.id, "gameName": state.gameName })
+    mergeRoles({ "_id": state.id, "role": state.role })
     setEditShow(false)
   })
+  const handleSave = ((e) => {
+    e.preventDefault();
+    mergeRoles({
+      "role": newRole.current.value
+    });
+    setShow(false)
+  });
   const handleShow = () => setShow(true);
+  useEffect(() => {
+    if (mergeRoleResponse) {
+      getRoles();
+
+    }
+
+  }, [mergeRoleResponse])
+  useEffect(() => {
+    if (mergeRoleResponse && mergeRoleResponse.data.status == true) {
+      getRoles();
+      // console.log(mergeRoleResponse.data.status , "mergeRoleResponse")
+
+    }
+
+  }, [mergeRoleResponse])
   return (
     <>
       <Container fluid>
@@ -86,15 +84,15 @@ const Games = ({
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
               <Card.Header>
-                <Card.Title as="h4">Games</Card.Title>
+                <Card.Title as="h4">Roles</Card.Title>
                 <p className="card-category">
-                  Games list
+                  Roles list
                 </p>
               </Card.Header>
               <Card.Body className="table-full-width table-responsive">
                 {/* <Button className="primary float-right">Add new game</Button> */}
                 <Button className="primary float-right" variant="primary" onClick={handleShow}>
-                  Add New Game
+                  Add New Role
                 </Button>
                 <Modal show={show} onHide={handleClose} aria-labelledby="example-modal-sizes-title-sm"
                 >
@@ -104,14 +102,15 @@ const Games = ({
                   <Modal.Body>
                     <Form>
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Game Name</Form.Label>
+                        <Form.Label>Role</Form.Label>
                         <Form.Control
-                          type="text"
-                          placeholder="Enter Game"
+                          type="test"
+                          placeholder="Add Role"
                           autoFocus
-                          ref={newGame}
+                          ref={newRole}
                         />
                       </Form.Group>
+                  
                     </Form>
                   </Modal.Body>
                   <Modal.Footer>
@@ -125,20 +124,20 @@ const Games = ({
                 </Modal>
                 <Modal show={editShow} onHide={handleClose} aria-labelledby="example-modal-sizes-title-sm">
                   <Modal.Header closeButton>
-                    <Modal.Title>Edit Games</Modal.Title>
+                    <Modal.Title>Edit Roles</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
                     <Form>
                       <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                        <Form.Label>Game Name</Form.Label>
+                        <Form.Label>Role Name</Form.Label>
                         <Form.Control
                           type="text"
                           placeholder="Enter Game"
                           autoFocus
-                          defaultValue={state.gameName}
+                          defaultValue={state.role}
                           onChange={(e) => {
                             e.preventDefault()
-                            setState({ ...state, gameName: e.target.value })
+                            setState({ ...state, role: e.target.value })
                           }
                           }
                         />
@@ -149,7 +148,7 @@ const Games = ({
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary" onClick={saveEditGame}>
+                    <Button variant="primary" onClick={saveEditRole}>
                       Save Changes
                     </Button>
                   </Modal.Footer>
@@ -157,28 +156,26 @@ const Games = ({
                 <Table className="table-hover table-striped">
                   <thead>
                     <tr>
-                      <th className="border-0">Sl.No</th>
-                      <th className="border-0">Name</th>
+                      <th className="border-0">Serial</th>
+                      <th className="border-0">Role</th>
                       <th className="border-0">Action</th>
                       <th className="border-0">Status</th>
                       <th className="border-0">Created On</th>
 
 
-
-
                     </tr>
                   </thead>
                   <tbody>
-                    {gamesData && gamesData.map((data, i) => {
+                    {roles && roles.map((data, i) => {
                       return (
                         <tr>
                           <td>{i + 1}</td>
-                          <td>{data.gameName}</td>
+                          <td>{data.role}</td>
                           <td><div>
                             <span style={{ cursor: 'pointer', marginRight: '4px' }}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"
                                 onClick={() => {
-                                  setState({ ...state, "id": data._id, "gameName": data.gameName })
+                                  setState({ ...state, "id": data._id, "role": data.role })
                                   console.log(state.id, "ïd")
                                   setEditShow(true)
 
@@ -189,38 +186,35 @@ const Games = ({
                             </span>
 
                             <span className="switch-button">
-                              <BootstrapSwitchButton
-                                checked={data.status}
-                                onlabel='In'
-                                offlabel='A'
-                                size="xs"
-                                height={15} width={15}
-                                onstyle="outline-secondary" offstyle="outline-success"
-                                onChange={(checked) => {
-                                  // setState({ setActive: checked  })
-                                  // console.log(state.setActive, " state active")
-                                  console.log(data.status, "data status")
-                                  console.log(checked, "on change active")
+                            <BootstrapSwitchButton
+                              checked={data.status}
+                              onlabel='In'
+                              offlabel='A'
+                              size="xs"
+                              height={15} width={15}
+                              onstyle="outline-secondary" offstyle="outline-success"
+                            onChange={(checked) => {
 
-                                  checked ?
-                                    mergeGames({ "_id": data._id, "gameName": data.gameName, "status": true })
-                                    :
-                                    mergeGames({ "_id": data._id, "gameName": data.gameName, "status": false })
-                                  checked.preventDefault()
+                                checked ?
+                                  mergeRoles({ "_id": data._id, "role": data.role, "status": true })
+                                  :
+                                  mergeRoles({ "_id": data._id, "role": data.role, "status": false })
+                                checked.preventDefault();
 
-                                }
-                                }
-                              />
+                              }
+                              }
+                            />
                             </span>
                           </div>
                           </td>
-                          <td>{data.status ? 'Active' : 'Inactive'}</td>
+                          <td>
+                            {data.status ? "Active" : "In Active"}
+                          </td>
                           <td>
                             {moment(data.createdAt).format("YYYY MMM DD")}
                             {/* {data.createdAt} */}
                           </td>
                         </tr>
-
                       )
                     })}
 
@@ -238,4 +232,4 @@ const Games = ({
   );
 }
 
-export default Games;
+export default Roles;
