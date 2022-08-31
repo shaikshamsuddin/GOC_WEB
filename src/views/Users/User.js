@@ -33,7 +33,7 @@ const Users = ({
     const [state, setState] = React.useState({
         role: "",
         id: "",
-        status: 1,
+        status: '',
         setActive: '',
         firstName: '',
         lastName: '',
@@ -75,7 +75,7 @@ const Users = ({
         getUsers()
     }, [])
 
-  
+
     useEffect(() => {
         getRoles()
         console.log(state, "state")
@@ -95,11 +95,17 @@ const Users = ({
     }, [roles])
 
     const saveRegisterUser = ((e) => {
-        registerUser({ "_id": state.id, "firstName": state.firstName, "lastName": state.lastName, "gender": state.gender, "mobile": state.mobile, "gameId": state.gameId, "roleId": state.roleId, "password": state.password })
+        registerUser({ "_id": state.id, "firstName": state.firstName, "lastName": state.lastName, "gender": state.gender, "mobile": state.mobile, "gameId": state.gameId, "roleId": state.roleId, "password": state.password , "status" : state.status})
         setEditShow(false)
         console.log(registerEditResponse, "registerEditResponse")
 
         e.preventDefault();
+
+    })
+    const onChangeAction = ((e)=>{
+        setState({...state, status : e.target.checked})
+        console.log(state.status,"status checked")
+        // e.preventDefault();
 
     })
     useEffect(() => {
@@ -248,7 +254,14 @@ const Users = ({
                                                     </select>
                                                 </div>
                                             </Form.Group>
-
+                                            <Form.Group className="mb-3" controlId="userForm.ControlInput4">
+                                                <Form.Label>Status</Form.Label>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={state.status}
+                                                    onChange={onChangeAction}
+                                                />
+                                            </Form.Group>
 
                                         </Form>
                                     </Modal.Body>
@@ -297,7 +310,7 @@ const Users = ({
                                                         <span style={{ cursor: 'pointer', marginRight: '4px' }}>
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"
                                                                 onClick={() => {
-                                                                    setState({ ...state, "id": data._id, "firstName": data.firstName, "lastName": data.lastName, "gender": data.gender, "mobile": data.mobile, "gameId": data.gameId, "roleId": data.roleId, "password": data.password, })
+                                                                    setState({ ...state, "id": data._id, "firstName": data.firstName, "lastName": data.lastName, "gender": data.gender, "mobile": data.mobile, "gameId": data.gameId, "roleId": data.roleId, "password": data.password, "status" : data.status })
                                                                     console.log(state.id, "ïd")
                                                                     setEditShow(true)
 

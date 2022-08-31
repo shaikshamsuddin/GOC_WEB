@@ -267,7 +267,7 @@ const RegisterPage = ({
                             console.log(state.roleId, "selected game id")
 
                           }}  >
-                          <option value='' disabled>{state.roleId == '' ? 'Select Game' : state.roleName}</option>
+                          <option value='' disabled>{state.roleId == '' ? 'Select Game' : data.role}</option>
 
                           {rolesOptions && rolesOptions.map((data, i) =>
                             <option value={data._id} > {data.role} </option>

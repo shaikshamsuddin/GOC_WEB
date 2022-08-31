@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Roles from "./Roles";
-import { getRoles,mergeRoles } from "../../Redux/actions";
+import { getRoles,mergeRoles,setMergeRoles } from "../../Redux/actions";
 
 const mapStateToProps = state => {
     return {
@@ -11,7 +11,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     getRoles,
-    mergeRoles
+    mergeRoles,
+    setMergeRoles
 }
 
 const RolesContainer = connect(

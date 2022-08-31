@@ -28,6 +28,7 @@ import LoginContainer from "components/login/LoginContainer";
 import RolesContainer from "views/Roles/RolesContainer";
 import UsersContainer from 'views/Users/UserContainer';
 import RegisterContainer from "components/register/registerContainer";
+import TeamsContainer from "views/Teams/teamsContainer";
 const dashboardRoutes = [
   // {
   //   path : "/login",
@@ -79,6 +80,13 @@ const dashboardRoutes = [
     component: UsersContainer,
     layout: "/admin"
   },
+  {
+    path : '/teams',
+    name : 'teams',
+    icon : 'nc-icon nc-circle-09',
+    component : TeamsContainer,
+    layout :"/admin"
+  }
   // {
   //   path: "/user",
   //   name: "User Profile",

@@ -23,7 +23,8 @@ const Games = ({
   getGames,
   games,
   mergeGames,
-  mergeGamesResponse
+  mergeGamesResponse,
+  setMergeGames
 }) => {
   useEffect(() => {
     getGames();
@@ -42,12 +43,7 @@ const Games = ({
     setActive: ''
   });
 
-  useEffect(() => {
-    if (mergeGamesResponse) {
-      getGames();
 
-    }
-  }, [mergeGamesResponse])
 
   useEffect(() => {
     setGamesData(games)
@@ -62,6 +58,14 @@ const Games = ({
   }
   )
 
+  useEffect(() => {
+    console.log(mergeGamesResponse,"mergeGamesResponse")
+    if (mergeGamesResponse) {
+      getGames();
+      setMergeGames(0)
+    }
+  
+  }, [mergeGamesResponse])
   const handleClose = ((e) => {
     setShow(false)
     setEditShow(false)
@@ -191,11 +195,11 @@ const Games = ({
                             <span className="switch-button">
                               <BootstrapSwitchButton
                                 checked={data.status}
-                                onlabel='In'
-                                offlabel='A'
+                                onlabel='A'
+                                offlabel='In'
                                 size="xs"
                                 height={15} width={15}
-                                onstyle="outline-secondary" offstyle="outline-success"
+                                offstyle="outline-secondary" onstyle="outline-success"
                                 onChange={(checked) => {
                                   // setState({ setActive: checked  })
                                   // console.log(state.setActive, " state active")
@@ -206,6 +210,7 @@ const Games = ({
                                     mergeGames({ "_id": data._id, "gameName": data.gameName, "status": true })
                                     :
                                     mergeGames({ "_id": data._id, "gameName": data.gameName, "status": false })
+
                                   checked.preventDefault()
 
                                 }

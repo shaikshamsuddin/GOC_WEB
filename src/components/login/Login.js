@@ -52,6 +52,7 @@ const LoginPage = ({
   
   })
     }
+    history.push('/admin')
 
   useEffect(()=>{
     if(loginResponse && loginResponse === 1) {

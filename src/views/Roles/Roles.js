@@ -22,7 +22,8 @@ const Roles = ({
   getRoles,
   roles,
   mergeRoles,
-  mergeRoleResponse
+  mergeRoleResponse,
+  setMergeRoles
 }) => {
   useEffect(() => {
     getRoles();
@@ -31,16 +32,17 @@ const Roles = ({
     console.log(roles, "roles")
 
   }, [roles]);
-  // const mergeResponseStatus = mergeRoleResponse == 1 ? true : false;
 
   const newRole = useRef();
+  const statusChange = useRef();
   const [show, setShow] = useState(false);
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     role: "",
     id: "",
-    status: 1,
-    setActive: ''
+    status: '',
+    setActive: '',
   });
+  const [ searchValues, setSearchValues] = useState({})
   const [editShow, setEditShow] = useState(false)
 
   const handleClose = ((e) => {
@@ -51,8 +53,15 @@ const Roles = ({
 
   const saveEditRole = ((e) => {
     e.preventDefault();
-    mergeRoles({ "_id": state.id, "role": state.role })
+    mergeRoles({ "_id": state.id, "role": state.role, "status": state.status })
     setEditShow(false)
+  })
+
+  const handleStatusChange = ((e) => {
+    console.log(e.target.checked, "statusChange")
+    setState({ ...state, status: e.target.checked })
+    //  e.preventDefault();
+
   })
   const handleSave = ((e) => {
     e.preventDefault();
@@ -65,18 +74,12 @@ const Roles = ({
   useEffect(() => {
     if (mergeRoleResponse) {
       getRoles();
+      setMergeRoles(0)
 
     }
 
   }, [mergeRoleResponse])
-  useEffect(() => {
-    if (mergeRoleResponse && mergeRoleResponse.data.status == true) {
-      getRoles();
-      // console.log(mergeRoleResponse.data.status , "mergeRoleResponse")
 
-    }
-
-  }, [mergeRoleResponse])
   return (
     <>
       <Container fluid>
@@ -90,7 +93,6 @@ const Roles = ({
                 </p>
               </Card.Header>
               <Card.Body className="table-full-width table-responsive">
-                {/* <Button className="primary float-right">Add new game</Button> */}
                 <Button className="primary float-right" variant="primary" onClick={handleShow}>
                   Add New Role
                 </Button>
@@ -110,7 +112,8 @@ const Roles = ({
                           ref={newRole}
                         />
                       </Form.Group>
-                  
+
+
                     </Form>
                   </Modal.Body>
                   <Modal.Footer>
@@ -128,7 +131,7 @@ const Roles = ({
                   </Modal.Header>
                   <Modal.Body>
                     <Form>
-                      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                      <Form.Group className="mb-3" controlId="roleName.ControlInput1">
                         <Form.Label>Role Name</Form.Label>
                         <Form.Control
                           type="text"
@@ -140,6 +143,17 @@ const Roles = ({
                             setState({ ...state, role: e.target.value })
                           }
                           }
+                        />
+                      </Form.Group>
+                      <Form.Group className="mb-3" controlId="status.ControlInput2">
+                        <Form.Label>Status</Form.Label>
+                        <input
+                          type="checkbox"
+                          autoFocus
+                          defaultChecked={state.status}
+
+                          // ref={statusChange}
+                          onChange={handleStatusChange}
                         />
                       </Form.Group>
                     </Form>
@@ -175,7 +189,7 @@ const Roles = ({
                             <span style={{ cursor: 'pointer', marginRight: '4px' }}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"
                                 onClick={() => {
-                                  setState({ ...state, "id": data._id, "role": data.role })
+                                  setState({ ...state, "id": data._id, "role": data.role, "status": data.status })
                                   console.log(state.id, "ïd")
                                   setEditShow(true)
 
@@ -183,27 +197,6 @@ const Roles = ({
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                               </svg>
-                            </span>
-
-                            <span className="switch-button">
-                            <BootstrapSwitchButton
-                              checked={data.status}
-                              onlabel='In'
-                              offlabel='A'
-                              size="xs"
-                              height={15} width={15}
-                              onstyle="outline-secondary" offstyle="outline-success"
-                            onChange={(checked) => {
-
-                                checked ?
-                                  mergeRoles({ "_id": data._id, "role": data.role, "status": true })
-                                  :
-                                  mergeRoles({ "_id": data._id, "role": data.role, "status": false })
-                                checked.preventDefault();
-
-                              }
-                              }
-                            />
                             </span>
                           </div>
                           </td>

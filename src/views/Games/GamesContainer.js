@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Games from "./Games";
-import { getGames,mergeGames, getRoles } from "../../Redux/actions";
+import { getGames,mergeGames, getRoles, setMergeGames} from "../../Redux/actions";
 
 const mapStateToProps = state => {
     return {
@@ -12,7 +12,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     getGames,
-    mergeGames
+    mergeGames,
+    setMergeGames
 }
 
 const GamesContainer = connect(

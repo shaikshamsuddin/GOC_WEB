@@ -2,7 +2,7 @@ import { call, put, takeEvery, takeLatest,actionChannel, take, apply} from "redu
 import fetchGetUsers from "../requests/fetchUsers";
 import {actionTypes} from "../../actions/actionTypes"
 import { getResponse } from "../requests/handleRequest";
-import {setLoginResponse,setGames,setRoles,setMergeGames,setMergeRoles, setUsers, setRegisterResponse} from '../../actions';
+import {setLoginResponse,setGames,setRoles,setMergeGames,setMergeRoles, setUsers, setRegisterResponse, setTeams, setResponseMergeTeam, setUploadTeamLogo, setUsersForCreateTeam, setWildSearchPlayers} from '../../actions';
 
 export function* loginUserSaga() {
   // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
@@ -77,7 +77,7 @@ export function* mergeGamesSaga() {
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
       console.log(data.data.status,"data games");
-      yield put(setMergeGames(data.data.status));
+      yield put(setMergeGames(data.status));
     }
   }
 }
@@ -98,7 +98,7 @@ export function* mergeRolesSaga() {
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
       console.log(data, "data response status")
-      yield put(setMergeRoles(data));
+      yield put(setMergeRoles(data.status));
     }
   }
 }
@@ -137,6 +137,105 @@ export function* registerUserSaga() {
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
       yield put(setRegisterResponse(data.status));
+    }
+  }
+}
+
+
+export function* fetchTeamsSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.GET_TEAMS);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setTeams(data.data));
+    }
+  }
+}
+
+export function* mergeTeamSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.MERGE_TEAM);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setResponseMergeTeam(data.data));
+    }
+  }
+}
+
+export function* uploadTeamLogoSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.UPLOAD_TEAM_LOGO);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setUploadTeamLogo(data));
+    }
+  }
+}
+export function* getUsersForCreateTeamSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.GET_USERS_FOR_CREATETEAM);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setUsersForCreateTeam(data.data));
+    }
+  }
+}
+export function* getWildSearchSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.WILD_SEARCH_PLAYERS);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setWildSearchPlayers(data.data));
     }
   }
 }
