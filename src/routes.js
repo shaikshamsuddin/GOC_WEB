@@ -29,6 +29,8 @@ import RolesContainer from "views/Roles/RolesContainer";
 import UsersContainer from 'views/Users/UserContainer';
 import RegisterContainer from "components/register/registerContainer";
 import TeamsContainer from "views/Teams/teamsContainer";
+import LeaguesContainer from "views/Leagues/leaguesContainer";
+import AddLeagueContainer from "views/Leagues/addLeagueContainer";
 const dashboardRoutes = [
   // {
   //   path : "/login",
@@ -36,12 +38,14 @@ const dashboardRoutes = [
   //   component : LoginContainer,
   //   layout : "/login"
   // },
-  // {
-  //   path : "/register",
-  //   name : "Register",
-  //   component : RegisterContainer,
-  //   layout : "/register"
-  // },
+  {
+    path : "/register",
+    name : "Register",
+    icon: "nc-icon nc-circle-09",
+
+    component : RegisterContainer,
+    layout : "/admin"
+  },
   // {
   //   upgrade: true,
   //   path: "/upgrade",
@@ -82,25 +86,25 @@ const dashboardRoutes = [
   },
   {
     path : '/teams',
-    name : 'teams',
+    name : 'Teams',
     icon : 'nc-icon nc-circle-09',
     component : TeamsContainer,
     layout :"/admin"
-  }
-  // {
-  //   path: "/user",
-  //   name: "User Profile",
-  //   icon: "nc-icon nc-circle-09",
-  //   component: UserProfile,
-  //   layout: "/admin"
-  // },
-  // {
-  //   path: "/table",
-  //   name: "Table List",
-  //   icon: "nc-icon nc-notes",
-  //   component: TableList,
-  //   layout: "/admin"
-  // },
+  },
+  {
+    path: "/league",
+    name: "Leagues",
+    icon: "nc-icon nc-circle-09",
+    component: LeaguesContainer,
+    layout: "/admin"
+  },
+  {
+    path: "/addLeague",
+    name: "Add New League",
+    icon: "nc-icon nc-notes",
+    component: AddLeagueContainer,
+    layout: "/admin"
+  },
   // {
   //   path: "/typography",
   //   name: "Typography",

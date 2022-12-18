@@ -1,7 +1,6 @@
 
 import actionTypeUrlMappings from "./actionTypeUrlMappings";
 const getUrl = (url)=>{
-    console.log(actionTypeUrlMappings,"Mapping url")
     return actionTypeUrlMappings[url];
 }
 

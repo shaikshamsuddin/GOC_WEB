@@ -87,3 +87,56 @@ export const setWildSearchPlayers = (payload)=>{
         payload
     }
 }
+
+
+export const deleteTeam = (payload)=>{
+    return{
+        type: actionTypes.DELETE_TEAM,
+        payload
+    }
+}
+export const deleteTeamRes = (payload)=>{
+    return{
+        type: actionTypes.DELETE_TEAM_RES,
+        payload
+    }
+}
+export const deletePlayer = (payload)=>{
+    return{
+        type: actionTypes.DELETE_PLAYER,
+        payload
+    }
+}
+export const deletePlayerRes = (payload)=>{
+    return{
+        type: actionTypes.DELETE_PLAYER_RES,
+        payload
+    }
+}
+
+export const mergeLeague = (payload)=>{
+    return{
+        type : actionTypes.MERGE_LEAGUE,
+        payload
+    }
+}
+
+export const mergeLeagueRes = (payload)=>{
+    return{
+        type : actionTypes.MERGE_LEAGUE_RES,
+        payload
+    }
+}
+export const getLeagues = (payload)=>{
+    return{
+        type : actionTypes.GET_LEAGUES,
+        payload
+    }
+}
+
+export const setLeagues = (payload)=>{
+    return{
+        type : actionTypes.SET_LEAGUES,
+        payload
+    }
+}

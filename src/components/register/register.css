@@ -12,29 +12,8 @@
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-.logo-background .logo-img-tag {
-    width: 50%;
-    /* border-radius: 100%; */
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    /* height: 100px; */
-}
-.logo-img-login {
-    width: 30%;
-    height: 50px !important;
-    /* border-radius: 100%; */
-    display: flex;
-    justify-content:center;
-    align-items: center;
-}
-.logo-background .logo-img-tag img {
-/* height: 600px !important; */
-width: 100%;
-display: block;
-object-fit: cover;
-border-radius: 50%;
-}
+
+
 .container-card{
     width: 70%;
     height: 500px;
@@ -42,16 +21,16 @@ border-radius: 50%;
 .container-fluid-block{
     display: flex;
     justify-content: center;
-    background-color: rgb(20, 28, 53);
+    /* background-color: rgb(20, 28, 53); */
     overflow: hidden;
     width: 100;
-    height: 100vh;
+    /* height: 100vh; */
     position: absolute;
 
 }
 
 .form-groups{
-    margin-bottom: 3px;
+    margin-bottom: 20px;
 }
 .condition-styles{
     margin-left: 5px;
@@ -66,4 +45,20 @@ border-radius: 50%;
     left: 100px;
     position: relative;
 
+}
+.container-register{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-rows{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.width-input{
+    width: 50%;
 }

@@ -24,12 +24,15 @@ const Games = ({
   games,
   mergeGames,
   mergeGamesResponse,
-  setMergeGames
+  setMergeGames,
+  getLeagues,
+  leagues
 }) => {
+
   useEffect(() => {
-    getGames();
-    console.log(mergeGamesResponse, "mergeGamesResponse")
-  }, [])
+    getGames()
+  }, []);
+
   const [gamesData, setGamesData] = useState([]);
   const newGame = useRef();
   const [show, setShow] = useState(false);
@@ -44,11 +47,9 @@ const Games = ({
   });
 
 
-
   useEffect(() => {
     setGamesData(games)
-  }
-    , [games])
+  },[games])
 
   const handleSave = ((e) => {
     e.preventDefault();
@@ -59,13 +60,11 @@ const Games = ({
   )
 
   useEffect(() => {
-    console.log(mergeGamesResponse,"mergeGamesResponse")
     if (mergeGamesResponse) {
       getGames();
       setMergeGames(0)
-    }
-  
-  }, [mergeGamesResponse])
+    }}, [mergeGamesResponse]);
+
   const handleClose = ((e) => {
     setShow(false)
     setEditShow(false)
@@ -183,7 +182,6 @@ const Games = ({
                               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"
                                 onClick={() => {
                                   setState({ ...state, "id": data._id, "gameName": data.gameName })
-                                  console.log(state.id, "ïd")
                                   setEditShow(true)
 
                                 }}>
@@ -202,9 +200,7 @@ const Games = ({
                                 offstyle="outline-secondary" onstyle="outline-success"
                                 onChange={(checked) => {
                                   // setState({ setActive: checked  })
-                                  // console.log(state.setActive, " state active")
-                                  console.log(data.status, "data status")
-                                  console.log(checked, "on change active")
+
 
                                   checked ?
                                     mergeGames({ "_id": data._id, "gameName": data.gameName, "status": true })

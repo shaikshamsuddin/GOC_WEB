@@ -116,16 +116,6 @@ const LoginPage = ({
                     </button>
 
                   </form>
-                  <div style={{ marginTop: '30px' }}>
-                    <span>
-                      Not a User!?
-                    </span>
-                    <a className="condition-styles" onClick={() => {
-                      history.push('/register')
-                    }}>
-                      Register
-                    </a>
-                  </div>
                 </Card>
               </div>
             </Col>

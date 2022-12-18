@@ -142,9 +142,10 @@ function Header() {
               <Nav.Link
                 className="m-0"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) =>  history.push('/register')}
               >
-                <span className="no-icon">Account</span>
+                 
+                <span className="no-icon">Add User</span>
               </Nav.Link>
             </Nav.Item>
             <Dropdown as={Nav.Item}>

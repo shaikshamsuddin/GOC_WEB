@@ -40,6 +40,14 @@ const gamesReducer = (state = initialState, action) => {
       return { ...state, setUsersForCreateTeamResponse: action.payload }
     case actionTypes.SET_WILD_SEARCH_PLAYERS:
       return { ...state, wildSearchPlayersResponse: action.payload }
+    case actionTypes.DELETE_TEAM_RES:
+      return { ...state, deleteTeamResponse: action.payload == 1 ? true : false }
+    case actionTypes.DELETE_PLAYER_RES:
+      return { ...state, deletePlayerResponse: action.payload == 1 ? true : false }
+    case actionTypes.MERGE_LEAGUE_RES:
+      return { ...state, mergeLeagueData: action.payload == 1 ? true : false }
+    case actionTypes.SET_LEAGUES:
+      return { ...state, fetchLeagues: action.payload };
     default:
       return state;
   }

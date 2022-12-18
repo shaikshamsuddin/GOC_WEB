@@ -1,0 +1,31 @@
+.sidebar .logo-img img {
+    max-width: 150px !important;
+    max-height: 150px !important;
+    border-radius: 30px;
+}
+
+.switch-button .switch.btn-xs {
+    min-width: 3rem !important;
+    min-height: 1rem !important;
+}
+
+.switch-button .btn {
+    line-height: calc(4px) !important;
+
+}
+
+.teamLogoName {
+    width: 200px;
+    height: 150px;
+
+}
+
+.upload-block {
+    border: 1px solid rgb(216, 207, 207);
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}

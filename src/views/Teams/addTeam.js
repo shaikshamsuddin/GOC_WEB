@@ -7,6 +7,9 @@ import moment from "moment";
 import Select from 'react-select';
 import PlayersComponent from "./playersComponent";
 import EditComponent from "./editTeamComponent";
+import { useLocation, Route, Switch, useParams, useHistory } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
+
 // react-bootstrap components
 import {
     Badge,
@@ -20,9 +23,8 @@ import {
     Row,
     Col,
 } from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
 
-const AddTeamComponent = ({state,
+const AddTeamComponent = ({
     mergeTeam,
     setShow,
     fetchTeams,
@@ -34,21 +36,41 @@ const AddTeamComponent = ({state,
 
  }) => {
 
+    const [state, setState] = useState({
+        gameName: "",
+        teamName: '',
+        gameId: "",
+        status: "",
+        setActive: '',
+        userId: '',
+        userName: '',
+        teamLogo: '',
+        players: [],
+        uploadLogoResponse: '',
+        teamId: '',
+        captain: false,
+        ViceCaptain: '',
+        mobile: '',
+        roleName: '',
+
+    });
+    const params = useParams();
     const saveNewTeam = ((e) => {
+        e.preventDefault();
+        console.log(createdBy, "state.userId")
         mergeTeam({ "teamName": state.teamName, "teamLogo": state.uploadLogoResponse, "createdBy": state.userId, "players": state.players })
         setShow(false)
     
-        const dataFetched = fetchTeams && fetchTeams.data.map((fetchedData) => {
-          fetchedData.players.map((player) => {
-            return (
-              player._id === state.userId
-            )
-          })
-        })
-        console.log(dataFetched, "dataFetched")
+        // const dataFetched = fetchTeams && fetchTeams.data.map((fetchedData) => {
+        //   fetchedData.players.map((player) => {
+        //     return (
+        //       player._id === state.userId
+        //     )
+        //   })
+        // })
         setAddPlayersPage(true)
       });
-
+  console.log(params,"params")
     const uploadTeamLogoFunc = ((e) => {
         const file = e.target.files[0];
         const formData = new FormData();
@@ -59,7 +81,6 @@ const AddTeamComponent = ({state,
         }).then(response => response.json()).then(data => {
             const logosData = data.data.filename
             setState({ ...state, uploadLogoResponse: logosData })
-            console.log(logosData, "uploadLogoResponse")
         })
             .catch(error => {
                 message.error('There was an error!', error);

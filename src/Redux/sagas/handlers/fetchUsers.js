@@ -2,7 +2,7 @@ import { call, put, takeEvery, takeLatest,actionChannel, take, apply} from "redu
 import fetchGetUsers from "../requests/fetchUsers";
 import {actionTypes} from "../../actions/actionTypes"
 import { getResponse } from "../requests/handleRequest";
-import {setLoginResponse,setGames,setRoles,setMergeGames,setMergeRoles, setUsers, setRegisterResponse, setTeams, setResponseMergeTeam, setUploadTeamLogo, setUsersForCreateTeam, setWildSearchPlayers} from '../../actions';
+import {setLoginResponse,setGames,setRoles,setMergeGames,setMergeRoles, setUsers, setRegisterResponse, setTeams, setResponseMergeTeam, setUploadTeamLogo, setUsersForCreateTeam, setWildSearchPlayers, deleteTeamRes, deletePlayerRes,mergeLeagueRes, setLeagues } from '../../actions';
 
 export function* loginUserSaga() {
   // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
@@ -76,7 +76,6 @@ export function* mergeGamesSaga() {
     const response = yield call(getResponse,params);
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
-      console.log(data.data.status,"data games");
       yield put(setMergeGames(data.status));
     }
   }
@@ -97,7 +96,6 @@ export function* mergeRolesSaga() {
     const response = yield call(getResponse,params);
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
-      console.log(data, "data response status")
       yield put(setMergeRoles(data.status));
     }
   }
@@ -236,6 +234,84 @@ export function* getWildSearchSaga() {
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
       yield put(setWildSearchPlayers(data.data));
+    }
+  }
+}
+export function* deleteTeamSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.DELETE_TEAM);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(deleteTeamRes(data.status));
+    }
+  }
+}
+export function* deletePlayerSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.DELETE_PLAYER);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(deletePlayerRes(data.status));
+    }
+  }
+}
+
+export function* mergeLeagueSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.MERGE_LEAGUE);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(mergeLeagueRes(data.status));
+    }
+  }
+}
+
+export function* getLeaguesSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.GET_LEAGUES);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setLeagues(data.data));
     }
   }
 }

@@ -11,7 +11,11 @@ const actionTypeUrlMappings = {
     GET_TEAMS: url + "/api/games/getTeams",
     MERGE_TEAM: url + "/api/games/mergeTeam",
     GET_USERS_FOR_CREATETEAM: url + "/api/games/getUserForCreateTeam",
-    WILD_SEARCH_PLAYERS: url + "/api/games/wildSearchPlayers"
+    WILD_SEARCH_PLAYERS: url + "/api/games/wildSearchPlayers",
+    DELETE_TEAM : url+"/api/games/deleteTeam",
+    DELETE_PLAYER : url+"/api/games/deletePlayer",
+    MERGE_LEAGUE: url+ "/api/leagues/mergeLeague",
+    GET_LEAGUES : url+"/api/leagues/getLeagues"
 
 
 }

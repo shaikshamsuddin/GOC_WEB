@@ -6,7 +6,7 @@ import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import moment from "moment";
 import Select from 'react-select';
 import Form from 'react-bootstrap/Form';
-
+import { useLocation } from "react-router";
 // react-bootstrap components
 import {
     Badge,
@@ -21,7 +21,7 @@ import {
     Col,
 } from "react-bootstrap";
 
-const EditComponent = ({ state,
+const EditComponent = ({
     setAddPlayersPage,
     setEditShow,
     editShow,
@@ -32,8 +32,31 @@ const EditComponent = ({ state,
 
 }) => {
 
-    const saveEditTeam = (() => {
-        mergeTeam({})
+    const [state, setState] = useState({
+        gameName: "",
+        teamName: '',
+        gameId: "",
+        status: "",
+        setActive: '',
+        userId: '',
+        userName: '',
+        teamLogo: '',
+        players: [],
+        uploadLogoResponse: '',
+        teamId: '',
+        captain: false,
+        ViceCaptain: '',
+        mobile: '',
+        roleName: '',
+
+    });
+    const location = useLocation();
+
+    const saveEditTeam = ((e) => {
+        e.preventDefault();
+        mergeTeam({ "teamName": state.teamName, "createdBy": state.userId, "players": state.players, "_id" : state.teamId , "teamLogo" : state.uploadLogoResponse})
+
+        // mergeTeam({})
         setEditShow(false)
     })
     const handleClose = (() => {
@@ -41,7 +64,6 @@ const EditComponent = ({ state,
 
     })
     const handleStatusChange = ((e) => {
-        console.log(e.target.checked, "statusChange")
         setState({ ...state, status: e.target.checked })
         //  e.preventDefault();
 
