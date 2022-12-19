@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 import Login from "./Login";
 import { loginUser, getGames } from "../../Redux/actions";
 import { getRoles,registerUser } from "../../Redux/actions";
+import LoginPage from "./Login";
 
 const mapStateToProps = state => {
     return {
@@ -21,6 +22,6 @@ const mapDispatchToProps = {
 const LoginContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(LoginPage);
 
 export default LoginContainer;

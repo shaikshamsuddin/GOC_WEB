@@ -45,7 +45,6 @@ root.render(
     <BrowserRouter>
       <Switch>
         <Route exact path= "/" component={LoginContainer} />
-        {/* <Route path = "/register" component = {RegisterContainer} /> */}
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
         {/* <Redirect from="/" to="/admin/dashboard" /> */}
       </Switch>

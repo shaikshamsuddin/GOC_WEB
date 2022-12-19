@@ -197,9 +197,11 @@ function Header() {
             <Nav.Item>
               <Nav.Link
                 className="m-0"
-                href="#pablo"
                 onClick={(e) => {
-                  history.push('/')
+                  e.preventDefault()
+                  // history.push('/')
+                  localStorage.clear();
+        window.location.href = '/';
                 }}
               >
                 <span className="no-icon">Log out</span>

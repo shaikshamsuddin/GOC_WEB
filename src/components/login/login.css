@@ -1,33 +1,15 @@
-/* .logo-background{
-     background-image: 
-    url(../../assets/img/goc2.png);
-        
-        background-size:contain;
-        
-        height: 650px;
-        font-size: 50px;
-        background-repeat: no-repeat; 
-} */
+
 .text-color{
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .logo-background .logo-img-tag {
     width: 50%;
-    /* border-radius: 100%; */
     display: flex;
-    justify-content:center;
-    align-items: center;
-    /* height: 100px; */
+    /* justify-content:center; */
+    /* align-items: center; */
 }
-.logo-img-login {
-    width: 30%;
-    height: 50px !important;
-    /* border-radius: 100%; */
-    display: flex;
-    justify-content:center;
-    align-items: center;
-}
+
 .logo-background .logo-img-tag img {
 /* height: 600px !important; */
 width: 100%;
@@ -36,8 +18,10 @@ object-fit: cover;
 border-radius: 50%;
 }
 .container-card{
-    width: 70%;
-    height: 500px;
+    width: 80%;
+    height: 700px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 .container-fluid-block{
     display: flex;
@@ -67,3 +51,18 @@ border-radius: 50%;
     position: relative;
 
 }
+.incorrectStyles{
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: red;
+}
+.promptStyles{
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: black;
+}
+
+/* .image-icon img{
+    width: 20px !important;
+    height: 20px !important;
+} */

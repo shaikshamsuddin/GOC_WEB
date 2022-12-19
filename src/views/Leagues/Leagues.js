@@ -70,10 +70,7 @@ const Leagues = ({
                                 </p>
                             </Card.Header>
                             <Card.Body className="table-full-width table-responsive">
-                                {/* <Button className="primary float-right">Add new game</Button> */}
-                                <Button className="primary float-right" variant="primary" >
-                                    Add New League
-                                </Button>
+                           
 
                                 <Table className="table-hover table-striped">
                                     <thead>
@@ -106,7 +103,7 @@ const Leagues = ({
                                                 <tr>
                                                     <td>{i + 1}</td>
                                                     <td>{data.leagueName}</td>
-                                                    <td><img src={`${Imgurl}/images/userUploads/${data.leaguePoster}`} className="teamLogoName" /></td>
+                                                    <td><img src={`${Imgurl}/images/userUploads/${data.leaguePoster}`} className="leagueLogoName" /></td>
 
                                                     <td>{data.leagueDesc}</td>
                                                     <td>{data.numberOfPlayers}</td>

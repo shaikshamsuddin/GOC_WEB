@@ -278,19 +278,27 @@ const Teams = ({
     mergeTeam({ "_id": teamCopy[0]._id, "teamName": teamCopy[0].teamName, "teamLogo": teamCopy[0].uploadLogoResponse, "createdBy": teamCopy[0].createdBy, "players": playersArray })
 
   }
-  // useEffect(() => {
-  //     if (wildSearchPlayersResponse && indexValue && value) {
-  //         const playersAddedCopy = playersArray && [...playersArray]
-  //         const wildSearchPlayersResponseCopy = [...wildSearchPlayersResponse]
-  //         console.log(wildSearchPlayersResponse, "wildSearchPlayersResponseCopy")
-  //         playersAddedCopy[indexValue].playerName = wildSearchPlayersResponseCopy[0].firstName;
-  //         playersAddedCopy[indexValue].mobile = wildSearchPlayersResponseCopy[0].mobile;
-  //         playersAddedCopy[indexValue].viceCaptain = false;
-  //         playersAddedCopy[indexValue].captain = false;
-  //         playersAddedCopy[indexValue].status = true;
-  //         setPlayersArray(playersAddedCopy)
-  //     }
-  // }, [wildSearchPlayersResponse, value, indexValue])
+  const closeEditPlayers = ()=>{
+    setAddPlayersPage(false)
+    getTeams();
+    setAddnewTeam(false)
+    setEditShow(false)
+
+    setShowTeams(true)
+  }
+  useEffect(() => {
+      if (wildSearchPlayersResponse && indexValue && value) {
+          const playersAddedCopy = playersArray && [...playersArray]
+          const wildSearchPlayersResponseCopy = [...wildSearchPlayersResponse]
+          console.log(wildSearchPlayersResponse, "wildSearchPlayersResponseCopy")
+          playersAddedCopy[indexValue].playerName = wildSearchPlayersResponseCopy[0].firstName;
+          playersAddedCopy[indexValue].mobile = wildSearchPlayersResponseCopy[0].mobile;
+          playersAddedCopy[indexValue].viceCaptain = false;
+          playersAddedCopy[indexValue].captain = false;
+          playersAddedCopy[indexValue].status = true;
+          setPlayersArray(playersAddedCopy)
+      }
+  }, [wildSearchPlayersResponse, value, indexValue])
 
   useEffect(() => {
     playersArray.map((values, i) => {
@@ -505,7 +513,7 @@ const Teams = ({
                                       <td>{index + 1}</td>
                                       <td>
                                         <Autocomplete
-                                          value={player.playerName ? player.playerName : ''}
+                                          // value={player.playerName ? player.playerName : ''}
                                           onChange={(e) => {
                                             e.preventDefault();
                                             setValue(e.target.value);
@@ -660,7 +668,7 @@ const Teams = ({
                           <Button variant="primary" onClick={saveEditPlayer}>
                             Save Changes
                           </Button>
-                          <Button variant="primary" >
+                          <Button variant="primary" onClick={closeEditPlayers}>
                             Close
                           </Button>
                         </Card.Body>

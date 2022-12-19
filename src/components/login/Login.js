@@ -30,12 +30,13 @@ const LoginPage = ({
   loginUser,
   getGames,
   loginResponse
-})=> {
+}) => {
   const history = useHistory();
   // const [username, setUserName] = React.useState('');
-  // const [password, setPassword] = React.useState('');
-  const [state,setState]= useState({
-    loading:false
+  const [incorrectPassword, setIncorrectPassword] = React.useState(false);
+  const [state, setState] = useState({
+    loading: false,
+    loginClick: false
   })
   const OnLoginClick = () => {
     history.push('/admin')
@@ -44,45 +45,52 @@ const LoginPage = ({
   const password = useRef();
   const loginSubmit = e => {
     e.preventDefault();
-    setState({...state,loading:true})
+    setState({ ...state, loading: true, loginClick: true })
     loginUser({
-      "mobile":mobileNumber.current.value,
-      "password":password.current.value,
-      "platform":"w"
-  
-  })
-    }
-    history.push('/admin')
+      "mobile": mobileNumber.current.value,
+      "password": password.current.value,
+      "platform": "w"
 
-  useEffect(()=>{
-    if(loginResponse && loginResponse === 1) {
+    })
+  }
+
+  useEffect(() => {
+    if (loginResponse && loginResponse === 1) {
       history.push('/admin')
-  
+      setIncorrectPassword(false)
+
     }
-  },[loginResponse])
-  useEffect(()=>{
+    else {
+      setIncorrectPassword(true)
+    }
+  }, [loginResponse, state.loginClick])
+
+  useEffect(() => {
     getGames()
-  },[])
+  }, [])
   return (
     <div className="container-fluid-block w-100">
 
       <div>
+        <div>
         <h3 className="text-center text-color">
           Welcome to Gangs of Cricket
         </h3>
-        {state.loading &&
-        <Spinner animation="border" />
-        }
-        <Container fluid className="login-container-fluid logo-background mt-5">
-        <Row className="d-flex"> 
-                <Col lg= {6} className="col" style={{width:'100%'}}>
-                <div className="logo-img-tag image-position">
+        </div>
+
+        {/* {state.loading &&
+          <Spinner animation="border" />
+        } */}
+        <Container fluid className="login-container-fluid logo-background">
+          <Row>
+            <Col className="col-lg-6 col-sm-12 col-m-12" style={{ width: '100%' }}>
+              <div className="logo-img-tag image-position">
                 <img src={require("assets/img/goc2.png")} alt="..." />
-                </div>
-                </Col>
-            <Col className="ml-auto mr-auto d-flex justify-content-end" lg={6}>
-              <div className="form-block" style={{width:'70%'}}>
-              <Card style={{padding : '30px'}}> 
+              </div>
+            </Col>
+            <Col className="d-flex justify-content-end col-lg-6 col-sm-12 col-m-12 " >
+              <div className="form-block container-card">
+                <Card style={{ padding: '50px' }}>
                   <form id="loginform" onSubmit={loginSubmit}>
                     <div className="form-group">
                       <label>UserName</label>
@@ -109,6 +117,15 @@ const LoginPage = ({
                         ref={password}
                       />
 
+                    </div>
+                    <div>
+                      {
+                        !state.loginClick && incorrectPassword ?
+                          <span></span>
+                          :
+<span className="incorrectStyles">
+                            please enter correct credentials
+                          </span>                      }
                     </div>
 
                     <button type="submit" className="btn btn-primary mt-3">
