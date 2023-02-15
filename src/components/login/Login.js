@@ -73,9 +73,9 @@ const LoginPage = ({
 
       <div>
         <div>
-        <h3 className="text-center text-color">
-          Welcome to Gangs of Cricket
-        </h3>
+          <h3 className="text-center text-color">
+            Welcome to Gangs of Cricket
+          </h3>
         </div>
 
         {/* {state.loading &&
@@ -123,9 +123,9 @@ const LoginPage = ({
                         !state.loginClick && incorrectPassword ?
                           <span></span>
                           :
-<span className="incorrectStyles">
+                          <span className="incorrectStyles">
                             please enter correct credentials
-                          </span>                      }
+                          </span>}
                     </div>
 
                     <button type="submit" className="btn btn-primary mt-3">

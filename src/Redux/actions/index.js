@@ -9,7 +9,9 @@ export { getGames,setGames,getUsers,setUsers, getTeams, setTeams, mergeTeam ,
      mergeLeague,
      mergeLeagueRes,
      getLeagues,
-     setLeagues
+     setLeagues,
+     addTeamsToLeague,
+     setAddTeamsToLeague
      
 
 

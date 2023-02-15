@@ -16,8 +16,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-
-
+import DatePicker from "react-date-picker";
 const AddLeague = ({
   getLeagues,
   leagues,
@@ -250,6 +249,11 @@ const AddLeague = ({
                 <div className="register-rows row">
                   <div className="form-groups width-input col-6">
                     <label>Start Date</label>
+                    {/* <DatePicker
+                      onChange={(event) => setState({ ...state, startDate: event.target.value })}
+                      value={moment(state.startDate).format("DD-MMM-YYYY")}
+                    /> */}
+
 
                     <input
                       type="date"

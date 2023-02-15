@@ -33,7 +33,7 @@ const gamesReducer = (state = initialState, action) => {
     case actionTypes.SET_TEAMS:
       return { ...state, fetchTeams: action.payload }
     case actionTypes.SET_MERGE_TEAM:
-      return { ...state, mergeTeamResponse: action.payload }
+      return { ...state, mergeTeamResponse: action.payload == 1 ? true : false }
     case actionTypes.SET_UPLOAD_TEAM_LOGO:
       return { ...state, uploadTeamLogoResponse: action.payload }
     case actionTypes.SET_USERS_FOR_CREATETEAM:
@@ -48,6 +48,8 @@ const gamesReducer = (state = initialState, action) => {
       return { ...state, mergeLeagueData: action.payload == 1 ? true : false }
     case actionTypes.SET_LEAGUES:
       return { ...state, fetchLeagues: action.payload };
+    case actionTypes.SET_ADD_TEAM_TO_LEAGUE:
+      return { ...state, isTeamsAddedToLeague: action.payload == 1 ? true : false }
     default:
       return state;
   }

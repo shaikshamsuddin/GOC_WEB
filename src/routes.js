@@ -31,18 +31,20 @@ import RegisterContainer from "components/register/registerContainer";
 import TeamsContainer from "views/Teams/teamsContainer";
 import LeaguesContainer from "views/Leagues/leaguesContainer";
 import AddLeagueContainer from "views/Leagues/addLeagueContainer";
+import DashboardContainer from "views/Dashboard/DashboardContainer";
 const dashboardRoutes = [
-  // {
-  //   path : "/login",
-  //   name : "Login",
-  //   component : LoginContainer,
-  //   layout : "/login"
-  // },
+  {
+    path : "/dashboard",
+    name : "Dashboard",
+    component : DashboardContainer,
+    icon: "nc-icon nc-circle-09",
+
+    layout : "/admin"
+  },
   {
     path : "/register",
     name : "Register",
     icon: "nc-icon nc-circle-09",
-
     component : RegisterContainer,
     layout : "/admin"
   },

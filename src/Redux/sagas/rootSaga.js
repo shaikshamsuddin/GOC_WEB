@@ -9,7 +9,8 @@ import {loginUserSaga,getGamesSaga,getRolesSaga,mergeGamesSaga,mergeRolesSaga,ge
   deleteTeamSaga,
   deletePlayerSaga,
   mergeLeagueSaga,
-  getLeaguesSaga} from "./handlers/fetchUsers";
+  getLeaguesSaga,
+  addTeamsToLeagueSaga} from "./handlers/fetchUsers";
 
 export default function* rootSaga() {
   yield all([
@@ -28,6 +29,7 @@ export default function* rootSaga() {
     deleteTeamSaga(),
     deletePlayerSaga(),
     mergeLeagueSaga(),
-    getLeaguesSaga()
+    getLeaguesSaga(),
+    addTeamsToLeagueSaga()
   ]);
 }

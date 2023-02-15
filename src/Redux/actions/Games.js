@@ -140,3 +140,17 @@ export const setLeagues = (payload)=>{
         payload
     }
 }
+
+export const addTeamsToLeague = (payload)=>{
+    return{
+        type: actionTypes.ADD_TEAM_TO_LEAGUE,
+        payload
+    }
+}
+
+export const setAddTeamsToLeague= (payload)=>{
+    return{
+        type: actionTypes.SET_ADD_TEAM_TO_LEAGUE,
+        payload
+    }
+}

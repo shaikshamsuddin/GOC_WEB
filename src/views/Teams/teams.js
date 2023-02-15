@@ -12,6 +12,8 @@ import TeamsComponent from "./teamsComponent";
 import { useLocation, Route, Switch, useParams, useHistory } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+// import Autocomplete from 'react-autocomplete';
+
 // react-bootstrap components
 import {
   Badge,
@@ -70,6 +72,7 @@ const Teams = ({
   const [value, setValue] = React.useState('');
   const [indexValue, setIndexValue] = React.useState('');
   const [deleteStatus, setDeleteStatus] = useState()
+  const [ifPlayersSaved, setIfPlayersSaved] = useState(false);
 
 
   const [state, setState] = useState({
@@ -200,7 +203,7 @@ const Teams = ({
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file)
-    fetch(`'${Imgurl}/api/games/uploadImage'`, {
+    fetch(`${Imgurl}/api/games/uploadImage`, {
       method: 'POST',
       body: formData,
     }).then(response => response.json()).then(data => {
@@ -227,19 +230,18 @@ const Teams = ({
 
   }, [value])
 
-  useEffect(() => {
-    if (inputValue) {
-      wildSearchPlayers({ "searchText": inputValue })
-    }
+  // useEffect(() => {
+  //   if (inputValue) {
+  //     wildSearchPlayers({ "searchText": inputValue })
+  //   }
 
-  }, [inputValue])
+  // }, [inputValue])
   const wildsearchCopy = wildSearchPlayersResponse && [...wildSearchPlayersResponse]
 
   const valuesSearched = wildsearchCopy && wildsearchCopy.map((data) => {
     return data.firstName
   })
   console.log(playersArray, "Players Array");
-
 
   useEffect(() => {
     setTeamPlayerFiltered(teamPlayers)
@@ -273,12 +275,14 @@ const Teams = ({
       : ''
   }, [teamPlayerFiltered])
 
-  const saveEditPlayer = () => {
+  const saveEditPlayer = (e) => {
+    e.preventDefault();
     const teamCopy = [...teamPlayerFiltered]
-    mergeTeam({ "_id": teamCopy[0]._id, "teamName": teamCopy[0].teamName, "teamLogo": teamCopy[0].uploadLogoResponse, "createdBy": teamCopy[0].createdBy, "players": playersArray })
+    mergeTeam({ "_id": teamCopy[0]._id, "teamName": teamCopy[0].teamName, "teamLogo": teamCopy[0].teamLogo, "createdBy": teamCopy[0].createdBy, "teamSlogan": teamCopy[0].teamSlogan, "players": playersArray })
+    setIfPlayersSaved(mergeTeamResponse)
 
   }
-  const closeEditPlayers = ()=>{
+  const closeEditPlayers = () => {
     setAddPlayersPage(false)
     getTeams();
     setAddnewTeam(false)
@@ -287,17 +291,17 @@ const Teams = ({
     setShowTeams(true)
   }
   useEffect(() => {
-      if (wildSearchPlayersResponse && indexValue && value) {
-          const playersAddedCopy = playersArray && [...playersArray]
-          const wildSearchPlayersResponseCopy = [...wildSearchPlayersResponse]
-          console.log(wildSearchPlayersResponse, "wildSearchPlayersResponseCopy")
-          playersAddedCopy[indexValue].playerName = wildSearchPlayersResponseCopy[0].firstName;
-          playersAddedCopy[indexValue].mobile = wildSearchPlayersResponseCopy[0].mobile;
-          playersAddedCopy[indexValue].viceCaptain = false;
-          playersAddedCopy[indexValue].captain = false;
-          playersAddedCopy[indexValue].status = true;
-          setPlayersArray(playersAddedCopy)
-      }
+    if (wildSearchPlayersResponse && indexValue && value) {
+      const playersAddedCopy = playersArray && [...playersArray]
+      const wildSearchPlayersResponseCopy = [...wildSearchPlayersResponse]
+      console.log(wildSearchPlayersResponse, "wildSearchPlayersResponseCopy")
+      playersAddedCopy[indexValue].playerName = wildSearchPlayersResponseCopy[0].firstName;
+      playersAddedCopy[indexValue].mobile = wildSearchPlayersResponseCopy[0].mobile;
+      playersAddedCopy[indexValue].viceCaptain = false;
+      playersAddedCopy[indexValue].captain = false;
+      playersAddedCopy[indexValue].status = true;
+      setPlayersArray(playersAddedCopy)
+    }
   }, [wildSearchPlayersResponse, value, indexValue])
 
   useEffect(() => {
@@ -446,7 +450,8 @@ const Teams = ({
                               Upload Team Logo
                             </Form.Label>
                             <div className="upload-block">
-                              <img src={`${Imgurl}/images/userUploads/${state.teamLogo}`} className="teamLogoEdit" />                                        <input id="image" type="file" accept="image/*" onChange={uploadTeamLogoFunc} />
+                              <img src={`${Imgurl}/images/userUploads/${state.uploadLogoResponse}`} className="teamLogoEdit" />
+                              <input id="image" type="file" accept="image/*" onChange={uploadTeamLogoFunc} />
                             </div>
                           </Form.Group>
                           <Form.Group className="mb-3" controlId="status.ControlInput2">
@@ -511,9 +516,55 @@ const Teams = ({
                                   return (
                                     <tr key={index}>
                                       <td>{index + 1}</td>
-                                      <td>
+                                      {/* <td>
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          id="playerSearch"
+                                          name="playerSearch"
+                                          aria-describedby="playerSearch"
+                                          placeholder="search player"
+                                          value={player.playerName}
+                                          onChange={(event) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            setValue(event.target.value);
+                                            setIndexValue(index);
+
+                                         
+                                            setState({ ...state, mobile: event.target.value })
+                                          }}
+
+                                        />
+
+                                      </td> */}
+                                      {/* <td>
                                         <Autocomplete
-                                          // value={player.playerName ? player.playerName : ''}
+                                          value={this.state.val}
+                                          items={MoviesData()}
+                                          getItemValue={item => item.title}
+                                          shouldItemRender={renderMovieTitle}
+                                          renderMenu={item => (
+                                            <div className="dropdown">
+                                              {item}
+                                            </div>
+                                          )}
+                                          renderItem={(item, isHighlighted) =>
+                                            <div className={`item ${isHighlighted ? 'selected-item' : ''}`}>
+                                              {item.title}
+                                            </div>
+                                          }
+                                          onChange={(e) => {
+                                            e.preventDefault();
+                                            setValue(e.target.value);
+                                            setIndexValue(index);
+                                          }}
+                                         onSelect={val => setValue(val)}
+                                        />
+                                      </td> */}
+                                      {/* <td>
+                                        <Autocomplete
+                                          value={player.playerName ? player.playerName : ''}
                                           onChange={(e) => {
                                             e.preventDefault();
                                             setValue(e.target.value);
@@ -524,11 +575,11 @@ const Teams = ({
                                             {
                                               setInputValue(event.target.value);
 
-                                              // newInputValue && wildSearchPlayers({ "searchText": 'Shubham' })
-                                              // wildSearchPlayers({ "searchText": newInputValue })
+                                              newInputValue && wildSearchPlayers({ "searchText": 'Shubham' })
+                                              wildSearchPlayers({ "searchText": newInputValue })
 
                                             }
-                                            // console.log(wildSearchPlayersResponse, "wildSearchPlayersResponse")
+                                            console.log(wildSearchPlayersResponse, "wildSearchPlayersResponse")
                                           }}
                                           onFocus={() => {
                                             setState({ ...state, focus: true })
@@ -537,8 +588,8 @@ const Teams = ({
                                           renderInput={(params) => <TextField {...params} label="Controllable" variant="outlined" />}
                                         />
 
-                                      </td>
-                                      {/* <td></td> */}
+                                      </td> */}
+                                      <td> { player.playerName } </td>
                                       <td>
                                         <input
                                           type="number"
@@ -598,6 +649,7 @@ const Teams = ({
                                                 if (index === i) {
                                                   if (event.target.checked) {
                                                     playerValue.captain = true
+                                                    playerValue.viceCaptain = false
                                                     setState({ ...state, captainIndex: i })
                                                   }
                                                 }
@@ -624,6 +676,8 @@ const Teams = ({
                                                 if (index === i && state.captainIndex !== index) {
                                                   if (event.target.checked) {
                                                     playerValue.viceCaptain = true
+                                                    playerValue.captain = false
+
                                                   }
                                                 }
                                                 else {

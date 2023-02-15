@@ -15,7 +15,9 @@ const actionTypeUrlMappings = {
     DELETE_TEAM : url+"/api/games/deleteTeam",
     DELETE_PLAYER : url+"/api/games/deletePlayer",
     MERGE_LEAGUE: url+ "/api/leagues/mergeLeague",
-    GET_LEAGUES : url+"/api/leagues/getLeagues"
+    GET_LEAGUES : url+"/api/leagues/getLeagues",
+    ADD_TEAM_TO_LEAGUE: url+"/api/leagues/addTeamsToLeague"
+    
 
 
 }
