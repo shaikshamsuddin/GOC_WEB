@@ -13,6 +13,8 @@ import { useLocation, Route, Switch, useParams, useHistory } from "react-router-
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 // import Autocomplete from 'react-autocomplete';
+import { AutoSuggest } from 'react-autosuggestions';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 
 // react-bootstrap components
 import {
@@ -64,7 +66,7 @@ const Teams = ({
   const [logoResponse, setLogoResponse] = useState('');
   const [teamPlayers, setTeamPlayers] = useState([])
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState([]);
 
 
   const [teamPlayerFiltered, setTeamPlayerFiltered] = useState([]);
@@ -161,7 +163,15 @@ const Teams = ({
       )
     }
     )
-
+  const NewusersForAddingInTeam =
+    UsersForCreateTeamResponse && UsersForCreateTeamResponse.map((data) => {
+      return (
+        {
+          userId: data._id, firstName: data.firstName
+        }
+      )
+    }
+    )
   const selectedUser = ((value) => {
     setState({ ...state, userId: value.userId, userName: value.userName })
   })
@@ -221,14 +231,13 @@ const Teams = ({
 
 
 
-  // console.log(valuesSearched, "valuesSearched")
 
-  useEffect(() => {
-    if (value) {
-      wildSearchPlayers({ "searchText": value })
-    }
+  // useEffect(() => {
+  //   if (value) {
+  //     wildSearchPlayers({ "searchText": value })
+  //   }
 
-  }, [value])
+  // }, [value])
 
   // useEffect(() => {
   //   if (inputValue) {
@@ -236,11 +245,14 @@ const Teams = ({
   //   }
 
   // }, [inputValue])
+
+
   const wildsearchCopy = wildSearchPlayersResponse && [...wildSearchPlayersResponse]
 
   const valuesSearched = wildsearchCopy && wildsearchCopy.map((data) => {
     return data.firstName
   })
+  console.log(valuesSearched, "valuesSearched");
   console.log(playersArray, "Players Array");
 
   useEffect(() => {
@@ -516,80 +528,61 @@ const Teams = ({
                                   return (
                                     <tr key={index}>
                                       <td>{index + 1}</td>
-                                      {/* <td>
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="playerSearch"
-                                          name="playerSearch"
-                                          aria-describedby="playerSearch"
-                                          placeholder="search player"
-                                          value={player.playerName}
-                                          onChange={(event) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                            setValue(event.target.value);
-                                            setIndexValue(index);
 
-                                         
-                                            setState({ ...state, mobile: event.target.value })
-                                          }}
 
-                                        />
+                                      <td>
 
-                                      </td> */}
-                                      {/* <td>
-                                        <Autocomplete
-                                          value={this.state.val}
-                                          items={MoviesData()}
-                                          getItemValue={item => item.title}
-                                          shouldItemRender={renderMovieTitle}
-                                          renderMenu={item => (
-                                            <div className="dropdown">
-                                              {item}
-                                            </div>
-                                          )}
-                                          renderItem={(item, isHighlighted) =>
-                                            <div className={`item ${isHighlighted ? 'selected-item' : ''}`}>
-                                              {item.title}
-                                            </div>
-                                          }
-                                          onChange={(e) => {
-                                            e.preventDefault();
-                                            setValue(e.target.value);
-                                            setIndexValue(index);
-                                          }}
-                                         onSelect={val => setValue(val)}
-                                        />
-                                      </td> */}
-                                      {/* <td>
-                                        <Autocomplete
-                                          value={player.playerName ? player.playerName : ''}
-                                          onChange={(e) => {
-                                            e.preventDefault();
-                                            setValue(e.target.value);
-                                            setIndexValue(index);
-                                          }}
-                                          inputValue={value}
-                                          onInputChange={(event) => {
-                                            {
-                                              setInputValue(event.target.value);
+                                        {
+                                          player.mobile ?
+                                            player.playerName
 
-                                              newInputValue && wildSearchPlayers({ "searchText": 'Shubham' })
-                                              wildSearchPlayers({ "searchText": newInputValue })
+                                            :
+                                            <ReactSearchAutocomplete
+                                              items={inputValue}
+                                              onSearch={(string, results) => {
+                                                {
+                                                  const searchUsersForTeam = 
+                                                  NewusersForAddingInTeam.filter((players)=>{
+                                                    return( 
+                                                      players.firstName
+                                                      .toLowerCase()
+                                                      .includes(string.toLowerCase()) 
+                                                    )
 
-                                            }
-                                            console.log(wildSearchPlayersResponse, "wildSearchPlayersResponse")
-                                          }}
-                                          onFocus={() => {
-                                            setState({ ...state, focus: true })
-                                          }}
-                                          options={valuesSearched}
-                                          renderInput={(params) => <TextField {...params} label="Controllable" variant="outlined" />}
-                                        />
+                                                  })
+                                               
+                                                  
+                                                  setInputValue(searchUsersForTeam);
 
-                                      </td> */}
-                                      <td> { player.playerName } </td>
+
+                                                  console.log(searchUsersForTeam,string, "string");
+                                                  console.log(results, "results")
+
+                                                }
+                                              }}
+                                              // onHover={handleOnHover}
+                                              onSelect={
+                                                (result) => {
+                                                  wildSearchPlayers({ "searchText": result })
+
+                                                }
+                                              }
+                                              // onFocus={handleOnFocus}
+                                              autoFocus
+                                              formatResult={(item) => {
+                                                return (
+                                                  <>
+                                                    <span style={{ display: 'block', color: 'black', textAlign: 'left' }}>{item.firstName}</span>
+                                                    {/* <span style={{ display: 'block', textAlign: 'left' }}>{item.lastName}</span> */}
+
+                                                  </>
+                                                )
+                                              }
+                                              }
+                                            />
+
+                                        }
+                                      </td>
                                       <td>
                                         <input
                                           type="number"

@@ -55,9 +55,11 @@ const LoginPage = ({
   }
 
   useEffect(() => {
-    if (loginResponse && loginResponse === 1) {
-      history.push('/admin')
+    console.log(loginResponse,"loginResponse")
+    if (loginResponse && loginResponse == 1) {
       setIncorrectPassword(false)
+
+      history.push('/admin')
 
     }
     else {
@@ -118,20 +120,21 @@ const LoginPage = ({
                       />
 
                     </div>
-                    <div>
-                      {
-                        !state.loginClick && incorrectPassword ?
-                          <span></span>
-                          :
-                          <span className="incorrectStyles">
-                            please enter correct credentials
-                          </span>}
-                    </div>
+                 
 
                     <button type="submit" className="btn btn-primary mt-3">
                       Submit
                     </button>
-
+                    <div>
+                      {
+                         incorrectPassword && loginResponse == 0 ?
+                         <span className="incorrectStyles">
+                         please enter correct credentials
+                       </span>
+                          :
+                          <span className="incorrectStyles">
+                          </span>}
+                    </div>
                   </form>
                 </Card>
               </div>
