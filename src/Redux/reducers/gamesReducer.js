@@ -50,6 +50,8 @@ const gamesReducer = (state = initialState, action) => {
       return { ...state, fetchLeagues: action.payload };
     case actionTypes.SET_ADD_TEAM_TO_LEAGUE:
       return { ...state, isTeamsAddedToLeague: action.payload == 1 ? true : false }
+    case actionTypes.SET_TEAMS_FROM_LEAGUE:
+      return {...state, teamsInLeague: action.payload}
     default:
       return state;
   }

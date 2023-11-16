@@ -11,7 +11,9 @@ export { getGames,setGames,getUsers,setUsers, getTeams, setTeams, mergeTeam ,
      getLeagues,
      setLeagues,
      addTeamsToLeague,
-     setAddTeamsToLeague
+     setAddTeamsToLeague,
+     getTeamsFromLeague,
+     setTeamsFromLeague
      
 
 

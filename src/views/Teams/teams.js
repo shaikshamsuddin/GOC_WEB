@@ -30,8 +30,7 @@ import {
   Col,
 } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-const Imgurl = process.env.REACT_APP_DEV_MODE === "dev" ? process.env.REACT_APP_DEV_SERVER_URL : ""
-
+const Imgurl = process.env.REACT_APP_DEV_MODE === "dev" ? process.env.REACT_APP_DEV_SERVER_URL : "";
 const Teams = ({
   fetchTeams,
   games,
@@ -52,10 +51,7 @@ const Teams = ({
   deletePlayerResponse,
   wildSearchPlayersResponse,
   wildSearchPlayers,
-
-
 }) => {
-
   const [teamsData, setTeamsData] = useState([]);
   const newTeam = useRef();
   const [addnewTeam, setAddnewTeam] = useState(false);
@@ -65,18 +61,13 @@ const Teams = ({
   const [showTeams, setShowTeams] = useState(true);
   const [logoResponse, setLogoResponse] = useState('');
   const [teamPlayers, setTeamPlayers] = useState([])
-
   const [inputValue, setInputValue] = useState([]);
-
-
   const [teamPlayerFiltered, setTeamPlayerFiltered] = useState([]);
   const [playersArray, setPlayersArray] = useState([])
   const [value, setValue] = React.useState('');
   const [indexValue, setIndexValue] = React.useState('');
   const [deleteStatus, setDeleteStatus] = useState()
   const [ifPlayersSaved, setIfPlayersSaved] = useState(false);
-
-
   const [state, setState] = useState({
     gameName: "",
     teamName: '',
@@ -96,13 +87,12 @@ const Teams = ({
     index: '',
     captainIndex: '',
     focus: false,
-    teamSlogan: ''
+    teamSlogan: '',
+    ValidationsModal : false
   });
-
   const history = useHistory();
   const parms = useParams();
   const location = useLocation();
-
   useEffect(() => {
     getTeams(),
       getGames(),
@@ -120,12 +110,13 @@ const Teams = ({
     setAddnewTeam(false)
     setEditShow(false)
     setState({ ...state, "teamId": '' })
-
     setShowTeams(true)
 
   })
 
-
+  const closeModal =(()=>{
+    setState({...state, ValidationsModal : false })
+  })
   const addPlayersThroughTeam = ((data) => {
     setState({ ...state, "teamId": teamIdReq })
   })
@@ -172,6 +163,7 @@ const Teams = ({
       )
     }
     )
+    console.log(NewusersForAddingInTeam,"NewusersForAddingInTeam")
   const selectedUser = ((value) => {
     setState({ ...state, userId: value.userId, userName: value.userName })
   })
@@ -187,8 +179,6 @@ const Teams = ({
     getTeams({
       "_id": state.teamId
     })
-    // }
-
   }, [state.teamId, editShow])
   const handleStatusChange = ((e) => {
     setState({ ...state, status: e.target.checked })
@@ -197,10 +187,8 @@ const Teams = ({
     // console.log(deletePlayerResponse, "deletePlayerResponse")
     getTeams({ "_id": state.teamId });
   }, [deletePlayerResponse])
-
   const closeAddTeam = (() => {
     setAddnewTeam(false)
-
   })
   const saveNewTeam = ((e) => {
     e.preventDefault();
@@ -224,41 +212,15 @@ const Teams = ({
         message.error('There was an error!', error);
       });
   })
-
-
-
-
-
-
-
-
-  // useEffect(() => {
-  //   if (value) {
-  //     wildSearchPlayers({ "searchText": value })
-  //   }
-
-  // }, [value])
-
-  // useEffect(() => {
-  //   if (inputValue) {
-  //     wildSearchPlayers({ "searchText": inputValue })
-  //   }
-
-  // }, [inputValue])
-
-
   const wildsearchCopy = wildSearchPlayersResponse && [...wildSearchPlayersResponse]
-
   const valuesSearched = wildsearchCopy && wildsearchCopy.map((data) => {
     return data.firstName
   })
   console.log(valuesSearched, "valuesSearched");
   console.log(playersArray, "Players Array");
-
   useEffect(() => {
     setTeamPlayerFiltered(teamPlayers)
   }, [teamPlayers])
-
   const addRowFunc = ((e) => {
     e.preventDefault();
     // const playersData = teamsData && teamsData.filter((data) => data._id === state.teamId)
@@ -294,14 +256,15 @@ const Teams = ({
     setIfPlayersSaved(mergeTeamResponse)
 
   }
+
   const closeEditPlayers = () => {
     setAddPlayersPage(false)
     getTeams();
     setAddnewTeam(false)
     setEditShow(false)
-
     setShowTeams(true)
   }
+
   useEffect(() => {
     if (wildSearchPlayersResponse && indexValue && value) {
       const playersAddedCopy = playersArray && [...playersArray]
@@ -314,7 +277,7 @@ const Teams = ({
       playersAddedCopy[indexValue].status = true;
       setPlayersArray(playersAddedCopy)
     }
-  }, [wildSearchPlayersResponse, value, indexValue])
+  }, [wildSearchPlayersResponse, value, indexValue]);
 
   useEffect(() => {
     playersArray.map((values, i) => {
@@ -322,8 +285,8 @@ const Teams = ({
         setState({ ...state, captainIndex: i })
       }
     })
-  }, [])
-
+  }, []);
+var searchAutocompleteResult = [];
   // const teamsDataFiltered = teamsData && teamsData.filter((data) => data._id === state.teamId)
   return (
     <>
@@ -344,9 +307,7 @@ const Teams = ({
                     <Button className="primary float-right" variant="primary" onClick={handleShow}>
                       Add New Team
                     </Button>
-
-
-                    <Table className="table-hover table-striped">
+        <Table className="table-hover table-striped">
                       <thead>
                         <tr>
                           <th className="border-0">Sl.No</th>
@@ -506,9 +467,17 @@ const Teams = ({
                     <Col md="12">
                       <Card className="strpied-tabled-with-hover">
                         <Card.Body className="table-full-width table-responsive">
-                          <Button className="primary float-right" variant="primary" onClick={addRowFunc}>
+                          {/* <Button className="primary float-right" variant="primary" onClick={addRowFunc}>
                             Add New Player
-                          </Button>
+                          </Button> */}
+                          <Modal show={state.ValidationsModal} onHide={closeModal} aria-labelledby="example-modal-sizes-title-sm">
+                                    <Modal.Header closeButton>
+                                        <Modal.Title> Validations </Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <div> Captain and vice-captain can't be same person</div>
+                                    </Modal.Body>
+                          </Modal>
                           <Table className="table-hover table-striped">
                             <thead>
                               <tr>
@@ -523,23 +492,17 @@ const Teams = ({
                             </thead>
                             <tbody>
                               {
-
                                 playersArray && playersArray.map((player, index) => {
                                   return (
                                     <tr key={index}>
                                       <td>{index + 1}</td>
-
-
                                       <td>
-
                                         {
                                           player.mobile ?
                                             player.playerName
-
                                             :
                                             <ReactSearchAutocomplete
-                                              items={inputValue}
-                                              onSearch={(string, results) => {
+                                              onSearch = {(string, results) => {
                                                 {
                                                   const searchUsersForTeam = 
                                                   NewusersForAddingInTeam.filter((players)=>{
@@ -548,39 +511,56 @@ const Teams = ({
                                                       .toLowerCase()
                                                       .includes(string.toLowerCase()) 
                                                     )
-
                                                   })
-                                               
-                                                  
                                                   setInputValue(searchUsersForTeam);
-
-
+                                                  searchAutocompleteResult.length = 0;
+                                                  searchAutocompleteResult.push(searchUsersForTeam);
                                                   console.log(searchUsersForTeam,string, "string");
-                                                  console.log(results, "results")
-
+                                                  console.log(results, searchAutocompleteResult, "results")
                                                 }
                                               }}
+                                              items= {searchAutocompleteResult.lenght > 0 ? searchAutocompleteResult[0] : ''}
+
                                               // onHover={handleOnHover}
                                               onSelect={
                                                 (result) => {
                                                   wildSearchPlayers({ "searchText": result })
-
                                                 }
                                               }
+
+
+                                              styling = {
+                                                {
+                                                  height: "44px",
+                                                  border: "1px solid #dfe1e5",
+                                                  borderRadius: "24px",
+                                                  backgroundColor: "white",
+                                                  boxShadow: "rgba(32, 33, 36, 0.28) 0px 1px 6px 0px",
+                                                  hoverBackgroundColor: "#eee",
+                                                  color: "#212121",
+                                                  fontSize: "16px",
+                                                  fontFamily: "Arial",
+                                                  iconColor: "grey",
+                                                  lineColor: "rgb(232, 234, 237)",
+                                                  placeholderColor: "grey",
+                                                  clearIconMargin: '3px 14px 0 0',
+                                                  searchIconMargin: '0 0 0 16px'
+                                                }
+                                              }
+                                       
+                                    
+
                                               // onFocus={handleOnFocus}
                                               autoFocus
                                               formatResult={(item) => {
                                                 return (
                                                   <>
-                                                    <span style={{ display: 'block', color: 'black', textAlign: 'left' }}>{item.firstName}</span>
-                                                    {/* <span style={{ display: 'block', textAlign: 'left' }}>{item.lastName}</span> */}
-
+                                                    <span style={{ display: 'block', textAlign: 'left' }}>id: {item.firstName}</span>
                                                   </>
                                                 )
                                               }
-                                              }
+                                            }
                                             />
-
                                         }
                                       </td>
                                       <td>
@@ -592,6 +572,8 @@ const Teams = ({
                                           aria-describedby="MobileInput"
                                           placeholder="Enter Mobile Number"
                                           value={player.mobile}
+                                          maxLength={12}
+                                          minLength={10}
                                           onChange={(event) => {
                                             e.preventDefault();
                                             e.stopPropagation();
@@ -617,28 +599,25 @@ const Teams = ({
                                             let obj = playerArrayIndex[index]
                                             obj.playerRole = e.target.value;
                                             setPlayersArray([...playerArrayIndex])
-
-                                            // setState({ ...state, roleName: e.target.value }
-                                            // )
-
                                           }}  >
                                           <option value='' disabled>{state.roleName == '' ? 'Select Game' : player.playerRole}</option>
-
                                           <option value='Wk/Batsman' > Wicket Keeper/Batsman </option>
                                           <option value='Bowler' > Bowler</option>
                                           <option value='Batsman' > Batsman </option>
                                           <option value='All rounder' > All Rounder </option>
-                                        </select></td>
+                                        </select>
+                                        </td>
                                       <td>
                                         <input
                                           type="radio"
                                           name="Captain"
                                           value='captain'
                                           defaultChecked={player.captain}
-                                          onChange={
+                                            onChange={
                                             (event) => {
                                               let playerArrayModified = [...playersArray]
                                               playerArrayModified.map((playerValue, i) => {
+
                                                 if (index === i) {
                                                   if (event.target.checked) {
                                                     playerValue.captain = true
@@ -654,33 +633,33 @@ const Teams = ({
                                             }
                                           }
                                         />
-
                                       </td>
                                       <td>
                                         <input
-                                          type="radio"
-                                          name="Vice Captain"
-                                          value='viceCaptain'
-                                          defaultChecked={player.viceCaptain}
+                                          type= "radio"
+                                          name= "Vice Captain"
+                                          value= 'viceCaptain'
+                                          defaultChecked= {player.viceCaptain}
                                           onChange={
                                             (event) => {
-                                              let playerArrayModified = [...playersArray]
+                                              let playerArrayModified = [...playersArray];
                                               playerArrayModified.map((playerValue, i) => {
-                                                if (index === i && state.captainIndex !== index) {
+                                                if(index == i && index == state.captainIndex){
+                                                    setState({...state, ValidationsModal : true});
+                                                    console.log(state.captainIndex,index, i ,"error");
+                                                }
+                                                else if (index === i && state.captainIndex !== index) {
                                                   if (event.target.checked) {
                                                     playerValue.viceCaptain = true
-                                                    playerValue.captain = false
-
+                                                    playerValue.captain = false;
+                                                    console.log(state, state.captainIndex ,"values")
                                                   }
                                                 }
                                                 else {
                                                   playerValue.viceCaptain = false
-
                                                 }
-
                                               })
                                               setPlayersArray(playerArrayModified)
-
                                             }
                                           }
                                         />
@@ -706,10 +685,6 @@ const Teams = ({
                                 })
 
                               }
-
-
-
-
                             </tbody>
                           </Table>
                           <Button variant="primary" onClick={saveEditPlayer}>

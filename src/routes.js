@@ -96,7 +96,7 @@ const dashboardRoutes = [
   {
     path: "/league",
     name: "Leagues",
-    icon: "nc-icon nc-circle-09",
+    icon: "nc-icon nc-paper-2",
     component: LeaguesContainer,
     layout: "/admin"
   },

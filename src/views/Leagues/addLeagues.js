@@ -4,6 +4,9 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import moment from "moment";
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import {
   Badge,
   Modal,
@@ -16,7 +19,9 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import DatePicker from "react-date-picker";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { Dayjs } from 'dayjs';
+
 const AddLeague = ({
   getLeagues,
   leagues,
@@ -33,6 +38,11 @@ const AddLeague = ({
   const newLeague = useRef();
   const [show, setShow] = useState(false);
   const [editShow, setEditShow] = useState(false)
+  // const [startDate, setStartDate] = useState < Dayjs | null > (null);
+  // const [endDate, setEndDate] = useState < Dayjs | null > (null);
+
+
+
   const Imgurl = process.env.REACT_APP_DEV_MODE === "dev" ? process.env.REACT_APP_DEV_SERVER_URL : ""
 
   useEffect(() => {
@@ -89,8 +99,6 @@ const AddLeague = ({
   return (
     <>
       <div className="container-register">
-
-
         <Container fluid style={{ width: '100%' }}>
 
           <div className="form-block" >
@@ -191,6 +199,7 @@ const AddLeague = ({
                     <label>League1 Prices</label>
                     <input
                       type="number"
+                      min="0"
                       className="form-control"
                       id="league1Prices"
                       name="league1Prices"
@@ -205,6 +214,7 @@ const AddLeague = ({
                     <label>league2 Price</label>
                     <input
                       type="number"
+                      min="0"
                       className="form-control"
                       id="league2Prices"
                       name="league2Prices"
@@ -221,6 +231,7 @@ const AddLeague = ({
                     <label>league man of the Match</label>
                     <input
                       type="number"
+                      min="0"
                       className="form-control"
                       id="leagueMom"
                       name="leagueMom"
@@ -235,51 +246,45 @@ const AddLeague = ({
                     <label>league man of the Tournment</label>
                     <input
                       type="number"
+                      min="0"
                       className="form-control"
                       id="leagueMot"
                       name="leagueMot"
                       aria-describedby="leagueMot"
                       placeholder="Enter league Mot"
                       onChange={(event) => setState({ ...state, leagueMot: event.target.value })}
-
                     />
-
                   </div>
                 </div>
                 <div className="register-rows row">
                   <div className="form-groups width-input col-6">
                     <label>Start Date</label>
-                    {/* <DatePicker
-                      onChange={(event) => setState({ ...state, startDate: event.target.value })}
-                      value={moment(state.startDate).format("DD-MMM-YYYY")}
-                    /> */}
-
-
                     <input
                       type="date"
                       className="form-control"
-                      value={moment(state.startDate).format("DD-MMM-YYYY")}
-
+                      // value={moment(state.startDate).format("DD-MMM-YYYY")}
                       id="startDate"
                       name="startDate"
                       aria-describedby="startDate"
                       onChange={(event) => setState({ ...state, startDate: event.target.value })}
-
                     />
-
-
                   </div>
                   <div className="form-groups width-input col-6">
                     <label>End Date</label>
                     <input
                       type="date"
                       className="form-control"
-                      value={moment(state.endDate).format("DD-MMM-YYYY")}
+                      // value={moment(state.endDate).format("DD-MMM-YYYY")}
+                      disabled= {state.startDate ? false :true}
 
                       id="endDate"
                       name="endDate"
                       aria-describedby="endDate"
-                      onChange={(event) => setState({ ...state, endDate: event.target.value })}
+                      onChange={(event) => {
+                        {state.startDate ? 
+                        setState({ ...state, endDate: event.target.value }) : "" }
+                    console.log(event.target.value,"date")
+                      }}
 
                     />
 

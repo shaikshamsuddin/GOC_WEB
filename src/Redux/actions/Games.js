@@ -141,6 +141,7 @@ export const setLeagues = (payload)=>{
     }
 }
 
+// This is for API calling
 export const addTeamsToLeague = (payload)=>{
     return{
         type: actionTypes.ADD_TEAM_TO_LEAGUE,
@@ -148,9 +149,23 @@ export const addTeamsToLeague = (payload)=>{
     }
 }
 
+// This is for saving the response
 export const setAddTeamsToLeague= (payload)=>{
     return{
         type: actionTypes.SET_ADD_TEAM_TO_LEAGUE,
+        payload
+    }
+}
+
+export const getTeamsFromLeague = (payload)=>{
+    return{
+        type: actionTypes.GET_TEAMS_FROM_LEAGUE,
+        payload
+    }
+}
+export const setTeamsFromLeague = (payload)=>{
+    return{
+        type: actionTypes.SET_TEAMS_FROM_LEAGUE,
         payload
     }
 }

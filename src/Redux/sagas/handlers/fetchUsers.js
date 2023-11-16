@@ -2,7 +2,7 @@ import { call, put, takeEvery, takeLatest,actionChannel, take, apply} from "redu
 import fetchGetUsers from "../requests/fetchUsers";
 import {actionTypes} from "../../actions/actionTypes"
 import { getResponse } from "../requests/handleRequest";
-import {setLoginResponse,setGames,setRoles,setMergeGames,setMergeRoles, setUsers, setRegisterResponse, setTeams, setResponseMergeTeam, setUploadTeamLogo, setUsersForCreateTeam, setWildSearchPlayers, deleteTeamRes, deletePlayerRes,mergeLeagueRes, setLeagues, addTeamsToLeague } from '../../actions';
+import {setLoginResponse,setGames,setRoles,setMergeGames,setMergeRoles, setUsers, setRegisterResponse, setTeams, setResponseMergeTeam, setUploadTeamLogo, setUsersForCreateTeam, setWildSearchPlayers, deleteTeamRes, deletePlayerRes,mergeLeagueRes, setLeagues, setAddTeamsToLeague, setTeamsFromLeague } from '../../actions';
 
 export function* loginUserSaga() {
   // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
@@ -318,7 +318,7 @@ export function* getLeaguesSaga() {
 
 export function* addTeamsToLeagueSaga() {
   // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
-  const reqBuffer = yield actionChannel(actionTypes.SET_ADD_TEAM_TO_LEAGUE);
+  const reqBuffer = yield actionChannel(actionTypes.ADD_TEAM_TO_LEAGUE);
   while (true){
     const action = yield take(reqBuffer);
     const payload = action.payload;
@@ -331,7 +331,27 @@ export function* addTeamsToLeagueSaga() {
     const response = yield call(getResponse,params);
     const data = yield apply(response,response.json,[response]);
     if(data !== null || data !== undefined){
-      yield put(addTeamsToLeague(data.status));
+      yield put(setAddTeamsToLeague(data.status));
+    }
+  }
+}
+
+export function* fetchTeamsFromLeagueSaga() {
+  // yield takeLatest("GET_USERS_REQUESTED", handleGetUsers);
+  const reqBuffer = yield actionChannel(actionTypes.GET_TEAMS_FROM_LEAGUE);
+  while (true){
+    const action = yield take(reqBuffer);
+    const payload = action.payload;
+    const params = {
+      actionType: action.type,
+      payload,
+      method:"POST"
+    }
+
+    const response = yield call(getResponse,params);
+    const data = yield apply(response,response.json,[response]);
+    if(data !== null || data !== undefined){
+      yield put(setTeamsFromLeague(data.data));
     }
   }
 }

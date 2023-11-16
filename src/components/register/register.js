@@ -76,11 +76,8 @@ const RegisterPage = ({
 
   return (
     <div className="container-register">
-
-      <div style={{width: '100%' }}>
-     
-        <Container fluid style={{ width: '100%' }}>
-        
+      <div style={{width: '100%' }}> 
+        <Container fluid style={{ width: '100%' }}> 
               <div className="form-block" >
                 <Card style={{ padding: '30px',width: '100%' }}>
                   <form id="loginform" onSubmit={RegisterSubmit}>
@@ -246,11 +243,9 @@ const RegisterPage = ({
                     </div> */}
                   </form>
                 </Card>
-              </div>
-        
+              </div>    
         </Container>
       </div>
-
     </div>
   );
 }
